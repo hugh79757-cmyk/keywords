@@ -178,7 +178,6 @@
         }
         .stat-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 5px; }
 
-        /* 광고 박스 */
         .ad-box {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -221,7 +220,6 @@
             text-align: center;
         }
 
-        /* 모바일 카드 */
         .keyword-list-mobile {
             display: flex;
             flex-direction: column;
@@ -353,6 +351,7 @@
 
         .mobile-actions {
             display: flex;
+            flex-direction: row !important; /* 강제 가로 */
             gap: 8px;
         }
 
@@ -368,6 +367,7 @@
             text-align: center;
             transition: all 0.2s;
             -webkit-tap-highlight-color: transparent;
+            display: inline-block; /* 인라인 블록 */
         }
 
         .btn-copy {
@@ -388,7 +388,6 @@
             transform: scale(0.95);
         }
 
-        /* 데스크톱 테이블 */
         .keyword-table-desktop {
             display: none;
             background: var(--glass-bg);
@@ -497,15 +496,14 @@
             background: linear-gradient(90deg, #f59e0b, #fbbf24);
         }
 
-        /* ✅ 수정: 버튼 가로 정렬 */
+        /* ✅ 수정: 데스크톱 버튼 가로 정렬 강화 */
         .actions-cell {
-            display: flex;
-            flex-direction: row; /* 가로 정렬 */
-            gap: 8px;
-            align-items: center;
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 8px !important;
+            align-items: center !important;
         }
 
-        /* 아카이브 버튼 */
         .archive-btn {
             display: block;
             width: 100%;
@@ -603,7 +601,7 @@
     
             
             <div style="display:flex; flex-direction:column; gap:10px;">
-                <a href="reports/20251229_0334.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0334</a><a href="reports/20251229_0324.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0324</a><a href="reports/20251229_0312.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0312</a><a href="reports/20251229_0303.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0303</a><a href="reports/20251229_0221.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0221</a><a href="reports/20251229_0212.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0212</a><a href="reports/20251229_0201.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0201</a>
+                <a href="reports/20251229_1241.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1241</a><a href="reports/20251229_0334.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0334</a><a href="reports/20251229_0324.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0324</a><a href="reports/20251229_0312.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0312</a><a href="reports/20251229_0303.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0303</a><a href="reports/20251229_0221.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0221</a><a href="reports/20251229_0212.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0212</a><a href="reports/20251229_0201.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0201</a>
             </div>
             
             

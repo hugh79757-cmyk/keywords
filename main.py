@@ -9,7 +9,7 @@ import datetime
 import os
 import re
 import xml.etree.ElementTree as ET
-from zoneinfo import ZoneInfo  # Python 3.9+
+from zoneinfo import ZoneInfo
 
 # ==========================================
 # 🔑 API 키
@@ -22,6 +22,27 @@ SEARCH_CLIENT_SECRET = os.environ.get("NAVER_CLIENT_SECRET")
 # ==========================================
 PUB_ID = "ca-pub-8772455780561463"
 SLOT_ID = "1662647947"
+
+# ==========================================
+# 🚫 제외 키워드 리스트
+# ==========================================
+EXCLUDE_KEYWORDS = {
+    # 사이트 관련
+    "adsensefarm", "adsense", "farm",
+    "구글애드센스", "google adsense",
+    
+    # UI 요소
+    "순위", "키워드", "검색량", "조회수", "검색어",
+    "실시간", "트렌드", "급상승", "랭킹", "인기",
+    "hot", "new", "top", "best",
+    
+    # 버튼/메뉴
+    "더보기", "전체보기", "목록", "상세", "검색",
+    "이전", "다음", "홈", "메뉴",
+    
+    # 숫자/기호
+    "위", "건", "개", "회", "명"
+}
 
 # ==========================================
 # SEO 메타 태그
@@ -50,7 +71,7 @@ def get_seo_meta_tags(page_type="index"):
     """
 
 # ==========================================
-# 🎨 수정된 스타일
+# 🎨 스타일 (이전과 동일)
 # ==========================================
 def get_optimized_style():
     return """
@@ -392,7 +413,7 @@ def get_optimized_style():
 
         .mobile-actions {
             display: flex;
-            flex-direction: row !important; /* 강제 가로 */
+            flex-direction: row !important;
             gap: 8px;
         }
 
@@ -408,7 +429,7 @@ def get_optimized_style():
             text-align: center;
             transition: all 0.2s;
             -webkit-tap-highlight-color: transparent;
-            display: inline-block; /* 인라인 블록 */
+            display: inline-block;
         }
 
         .btn-copy {
@@ -537,7 +558,6 @@ def get_optimized_style():
             background: linear-gradient(90deg, #f59e0b, #fbbf24);
         }
 
-        /* ✅ 수정: 데스크톱 버튼 가로 정렬 강화 */
         .actions-cell {
             display: flex !important;
             flex-direction: row !important;
@@ -637,7 +657,7 @@ def get_side_rail_ad():
     """
 
 # ==========================================
-# 1. 키워드 수집
+# ✅ 개선된 키워드 수집 함수
 # ==========================================
 def get_keywords_from_farm():
     print("🚗 애드센스팜 크롤링...")
@@ -656,19 +676,42 @@ def get_keywords_from_farm():
         driver.execute_script("window.scrollTo(0, 500);")
         time.sleep(2)
         
-        elements = driver.find_elements(By.CSS_SELECTOR, "td, .keyword, .rank-text, li, span")
+        # 더 구체적인 셀렉터 사용
+        elements = driver.find_elements(By.CSS_SELECTOR, "td, .keyword, .rank-text, li")
         raw_keywords = []
         
         for elem in elements:
             text = elem.text.strip()
             if 2 <= len(text) < 30:
+                # 앞쪽 숫자 제거
                 clean = re.sub(r'^[\d\s.]+', '', text).strip()
-                if clean and not clean.isdigit() and clean not in ["순위", "키워드", "검색량", "조회수"]:
+                
+                # 소문자로 변환해서 비교
+                clean_lower = clean.lower()
+                
+                # ✅ 제외 조건 강화
+                if (clean and 
+                    not clean.isdigit() and 
+                    clean_lower not in EXCLUDE_KEYWORDS and
+                    len(clean) >= 2):
+                    
+                    # 추가 필터: 영문만으로 이루어진 것 중 일부 제외
+                    if clean.isalpha() and clean.lower() in ['ad', 'ads', 'new', 'hot']:
+                        continue
+                    
                     raw_keywords.append(clean)
+                    print(f"  수집: {clean}")
         
         unique_keywords = list(dict.fromkeys(raw_keywords))
-        print(f"✅ {len(unique_keywords)}개 수집")
-        return unique_keywords[:40]
+        
+        # ✅ 최종 필터링
+        filtered_keywords = [
+            kw for kw in unique_keywords 
+            if kw.lower() not in EXCLUDE_KEYWORDS
+        ]
+        
+        print(f"✅ {len(filtered_keywords)}개 키워드 수집 (필터링 후)")
+        return filtered_keywords[:40]
         
     except Exception as e:
         print(f"❌ 에러: {e}")
@@ -686,7 +729,7 @@ def get_keywords_from_google():
             keywords = []
             for item in root.findall(".//item"):
                 title = item.find("title").text
-                if title:
+                if title and title.lower() not in EXCLUDE_KEYWORDS:
                     keywords.append(title)
             return keywords[:40]
     except Exception as e:
@@ -811,7 +854,7 @@ def create_seo_optimized_dashboard():
             <td><span class="badge {item['badge']}">{item['grade']}</span></td>
             <td>
                 <div class="actions-cell">
-                    <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋 복사</button>
+                    <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋복사</button>
                     <a href="{link}" target="_blank" class="btn btn-link">분석 ↗</a>
                 </div>
             </td>
@@ -832,20 +875,18 @@ def create_seo_optimized_dashboard():
             </div>
             <span class="badge {item['badge']}">{item['grade']}</span>
             <div class="mobile-actions">
-                <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋 복사</button>
+                <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋복사</button>
                 <a href="{link}" target="_blank" class="btn btn-link">분석 ↗</a>
             </div>
         </div>
         """
     
-    # ✅ 한국 시간으로 변환 (UTC+9)
+    # 한국 시간
     try:
-        # Python 3.9+
         kst = datetime.datetime.now(ZoneInfo("Asia/Seoul"))
         now = kst.strftime("%Y-%m-%d %H:%M")
         file_date = kst.strftime("%Y%m%d_%H%M")
     except:
-        # 폴백: 수동으로 9시간 더하기
         utc_now = datetime.datetime.utcnow()
         kst_now = utc_now + datetime.timedelta(hours=9)
         now = kst_now.strftime("%Y-%m-%d %H:%M")
@@ -941,7 +982,7 @@ def create_seo_optimized_dashboard():
             
             <a href="archive.html" class="archive-btn">🗄️ 지난 리포트 보기</a>
             
-            <footer>© 2026 키워드 롯차 </footer>
+            <footer>© 2025 황금 키워드 상황실</footer>
         </main>
         
         {get_side_rail_ad()}

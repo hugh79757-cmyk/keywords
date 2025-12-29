@@ -855,7 +855,7 @@ def create_seo_optimized_dashboard():
             <td>
                 <div class="actions-cell">
                     <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋복사</button>
-                    <a href="{link}" target="_blank" class="btn btn-link">분석 ↗</a>
+                    <a href="{link}" target="_blank" class="btn btn-link">분석↗</a>
                 </div>
             </td>
         </tr>
@@ -876,7 +876,7 @@ def create_seo_optimized_dashboard():
             <span class="badge {item['badge']}">{item['grade']}</span>
             <div class="mobile-actions">
                 <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋복사</button>
-                <a href="{link}" target="_blank" class="btn btn-link">분석 ↗</a>
+                <a href="{link}" target="_blank" class="btn btn-link">분석↗</a>
             </div>
         </div>
         """

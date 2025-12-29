@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://keywords.rotcha.kr/sitemap.xml

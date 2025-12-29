@@ -49,7 +49,7 @@ def get_seo_meta_tags(page_type="index"):
     """
 
 # ==========================================
-# 🎨 개선된 스타일 (글래스모피즘)
+# 🎨 개선된 스타일
 # ==========================================
 def get_optimized_style():
     return """
@@ -81,7 +81,6 @@ def get_optimized_style():
             overflow-x: hidden;
         }
 
-        /* 배경 그라데이션 */
         body::before {
             content: '';
             position: fixed;
@@ -100,7 +99,6 @@ def get_optimized_style():
             50% { transform: translate(-2%, -2%); }
         }
 
-        /* 레이아웃 - 사이드레일 광고 포함 */
         .layout-wrapper {
             display: flex;
             justify-content: center;
@@ -126,14 +124,12 @@ def get_optimized_style():
             max-width: 900px;
         }
 
-        /* 데스크톱에서 사이드레일 표시 */
         @media (min-width: 1200px) {
             .side-rail {
                 display: block;
             }
         }
 
-        /* 헤더 */
         header {
             text-align: center;
             margin-bottom: 30px;
@@ -190,7 +186,6 @@ def get_optimized_style():
             50% { opacity: 0.5; transform: scale(1.2); }
         }
 
-        /* 통계 카드 */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -242,7 +237,6 @@ def get_optimized_style():
             letter-spacing: 1px;
         }
 
-        /* 테이블 광고 삽입용 */
         .ad-row td {
             padding: 0 !important;
         }
@@ -257,7 +251,6 @@ def get_optimized_style():
             text-align: center;
         }
 
-        /* 모바일 카드 광고 */
         .ad-box-mobile {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
@@ -544,9 +537,12 @@ def get_optimized_style():
             background: linear-gradient(90deg, #f59e0b, #fbbf24);
         }
 
+        /* ✅ 수정: 버튼 가로 정렬 */
         .actions-cell {
             display: flex;
+            flex-direction: row; /* 가로 정렬 */
             gap: 8px;
+            align-items: center;
         }
 
         /* 아카이브 버튼 */
@@ -570,7 +566,6 @@ def get_optimized_style():
             transform: scale(0.98);
         }
 
-        /* 토스트 */
         #toast {
             position: fixed;
             bottom: 24px;
@@ -594,7 +589,6 @@ def get_optimized_style():
             transform: translateX(-50%) translateY(0);
         }
 
-        /* 푸터 */
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -602,7 +596,6 @@ def get_optimized_style():
             font-size: 0.85rem;
         }
 
-        /* 반응형 */
         @media (min-width: 768px) {
             .keyword-list-mobile { display: none; }
             .keyword-table-desktop { display: block; }
@@ -645,10 +638,10 @@ def get_side_rail_ad():
     """
 
 # ==========================================
-# 1. 키워드 수집 (숫자 제거 강화)
+# 1. 키워드 수집 (숫자 제거)
 # ==========================================
 def get_keywords_from_farm():
-    print("🚗 [메인] 애드센스팜 크롤링 시작...")
+    print("🚗 애드센스팜 크롤링 시작...")
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
@@ -670,29 +663,24 @@ def get_keywords_from_farm():
         for elem in elements:
             text = elem.text.strip()
             if 2 <= len(text) < 30:
-                # ✅ 정규식으로 앞쪽 숫자와 점 완전 제거
-                # "1. 손흥민" → "손흥민"
-                # "10 이현주" → "이현주"
-                # "123햄스터" → "햄스터"
+                # 정규식으로 앞쪽 숫자 제거
                 clean = re.sub(r'^[\d\s.]+', '', text).strip()
                 
-                # 완전히 숫자로만 이루어진 것 제외
                 if clean and not clean.isdigit() and clean not in ["순위", "키워드", "검색량", "조회수"]:
                     raw_keywords.append(clean)
         
         unique_keywords = list(dict.fromkeys(raw_keywords))
-        print(f"✅ {len(unique_keywords)}개 키워드 수집 성공")
+        print(f"✅ {len(unique_keywords)}개 키워드 수집")
         return unique_keywords[:40]
         
     except Exception as e:
-        print(f"❌ 크롤링 에러: {e}")
+        print(f"❌ 에러: {e}")
         return []
     finally:
         driver.quit()
 
 def get_keywords_from_google():
-    """백업: 구글 트렌드 RSS"""
-    print("⚠️ [백업] 구글 트렌드 RSS 사용")
+    print("⚠️ 백업: 구글 트렌드 RSS")
     url = "https://trends.google.com/trends/trendingsearches/daily/rss?geo=KR"
     try:
         res = requests.get(url, timeout=10)
@@ -707,8 +695,7 @@ def get_keywords_from_google():
     except Exception as e:
         print(f"❌ 백업 실패: {e}")
     
-    # 최종 폴백
-    return ["인공지능", "ChatGPT", "블로그", "SEO", "키워드", "마케팅", "트렌드", "검색", "분석", "최적화"]
+    return ["인공지능", "ChatGPT", "블로그", "SEO", "키워드"]
 
 # ==========================================
 # 2. 블로그 수 조회
@@ -736,15 +723,13 @@ def get_blog_count(keyword):
 # 3. 메인 대시보드 생성
 # ==========================================
 def create_seo_optimized_dashboard():
-    # 키워드 수집
     keywords = get_keywords_from_farm()
     if not keywords:
-        print("🚨 메인 수집 실패 → 백업 소스 전환")
+        print("🚨 메인 실패 → 백업 사용")
         keywords = get_keywords_from_google()
     
     print(f"📊 {len(keywords)}개 키워드 분석 중...")
     
-    # 데이터 분석
     data = []
     for word in keywords:
         count = get_blog_count(word)
@@ -777,12 +762,10 @@ def create_seo_optimized_dashboard():
     
     data.sort(key=lambda x: x['count'])
     
-    # 통계
     diamond_cnt = len([d for d in data if d['css'] == 'rank-diamond'])
     gold_cnt = len([d for d in data if d['css'] == 'rank-gold'])
     max_count = max([d['count'] for d in data]) if data else 10000
     
-    # HTML 생성
     desktop_rows = ""
     mobile_cards = ""
     
@@ -790,9 +773,19 @@ def create_seo_optimized_dashboard():
         link = f"https://search.naver.com/search.naver?where=view&sm=tab_jum&query={item['word']}"
         bar_width = min((item['count'] / max_count) * 100, 100)
         
-        # ✅ 10개마다 광고 삽입
-        if idx > 0 and idx % 10 == 0:
-            # 테이블 광고
+        # ✅ 모바일: 5개마다 / 데스크톱: 7개마다
+        # 모바일 광고 (5개마다)
+        if idx > 0 and idx % 5 == 0:
+            mobile_cards += f"""
+            <div class="ad-box-mobile">
+                <div class="ad-label">Advertisement</div>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="{PUB_ID}" data-ad-slot="{SLOT_ID}" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
+            </div>
+            """
+        
+        # 데스크톱 광고 (7개마다)
+        if idx > 0 and idx % 7 == 0:
             desktop_rows += f"""
             <tr class="ad-row">
                 <td colspan="4" style="padding:0;">
@@ -803,15 +796,6 @@ def create_seo_optimized_dashboard():
                     </div>
                 </td>
             </tr>
-            """
-            
-            # 모바일 카드 광고
-            mobile_cards += f"""
-            <div class="ad-box-mobile">
-                <div class="ad-label">Advertisement</div>
-                <ins class="adsbygoogle" style="display:block" data-ad-client="{PUB_ID}" data-ad-slot="{SLOT_ID}" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
-            </div>
             """
         
         # 테이블 행
@@ -902,7 +886,6 @@ def create_seo_optimized_dashboard():
     </script>
     """
     
-    # 메인 페이지
     index_html = f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -932,12 +915,10 @@ def create_seo_optimized_dashboard():
             {stats_html}
             {get_ad_unit()}
             
-            <!-- 모바일 카드 -->
             <div class="keyword-list-mobile">
                 {mobile_cards}
             </div>
             
-            <!-- 데스크톱 테이블 -->
             <div class="keyword-table-desktop">
                 <table>
                     <thead>
@@ -972,7 +953,6 @@ def create_seo_optimized_dashboard():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(index_html)
     
-    # 리포트 저장
     if not os.path.exists("reports"):
         os.makedirs("reports")
     
@@ -982,7 +962,7 @@ def create_seo_optimized_dashboard():
     
     create_archive_page()
     
-    print("✅ 대시보드 생성 완료!")
+    print("✅ 대시보드 완성!")
     print(f"💎 블루오션: {diamond_cnt}개 | 🥇 꿀통: {gold_cnt}개")
 
 # ==========================================
@@ -1044,21 +1024,19 @@ def create_archive_page():
     
     with open("archive.html", "w", encoding="utf-8") as f:
         f.write(html)
-    
-    print("✅ 아카이브 페이지 생성 완료")
 
 # ==========================================
 # 실행
 # ==========================================
 if __name__ == "__main__":
     print("=" * 60)
-    print("🚀 황금 키워드 상황실 대시보드 생성 시작")
+    print("🚀 황금 키워드 상황실 시작")
     print("=" * 60)
     
     try:
         create_seo_optimized_dashboard()
-        print("\n✅ 모든 작업 완료!")
+        print("\n✅ 완료!")
     except Exception as e:
-        print(f"\n❌ 에러 발생: {e}")
+        print(f"\n❌ 에러: {e}")
         import traceback
         traceback.print_exc()

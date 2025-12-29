@@ -1,0 +1,38 @@
+name: Hourly Keyword Mining
+
+on:
+  schedule:
+    - cron: '0 * * * *' # 매시간 0분에 실행
+  workflow_dispatch: # 수동 실행
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install requests selenium webdriver-manager
+
+      - name: Run Mining Script
+        env:
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+        run: python main.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name 'KeywordBot'
+          git config --global user.email 'bot@noreply.github.com'
+          git add .
+          git commit -m "Auto update keywords" || echo "No changes"
+          git push

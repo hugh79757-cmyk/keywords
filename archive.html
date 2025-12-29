@@ -1,42 +1,88 @@
-<!DOCTYPE html><html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🗄️ 아카이브</title>
-    <meta name="description" content="지난 기록">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8772455780561463" crossorigin="anonymous"></script>
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>🗄️ 리포트 아카이브</title>
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-        :root { --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --accent: #bb86fc; --good: #03dac6; --bad: #cf6679; }
+        
+        :root {
+            --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --accent: #bb86fc;
+            --good: #03dac6; --bad: #cf6679;
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background: var(--bg); color: var(--text); }
+        body { font-family: 'Pretendard', sans-serif; background: var(--bg); color: var(--text); padding-bottom: 50px; }
+        
+        /* 레이아웃 */
         .layout-wrapper { display: flex; justify-content: center; gap: 20px; max-width: 1400px; margin: 0 auto; padding: 20px; }
         .side-rail { width: 160px; min-width: 160px; height: 600px; position: sticky; top: 20px; display: none; }
         .main-content { flex: 1; max-width: 800px; width: 100%; }
         @media (min-width: 1200px) { .side-rail { display: block; } }
+
+        /* 헤더 */
         header { text-align: center; margin-bottom: 30px; }
-        h1 { margin: 0; color: #fff; font-size: 2rem; }
+        h1 { margin: 0; color: #fff; font-size: 1.8rem; }
         .subtitle { color: #aaa; font-size: 0.9rem; margin-top: 5px; }
-        .card { background: var(--card); border-radius: 15px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); margin-bottom: 20px; }
-        table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; color: #888; font-size: 0.85rem; padding: 10px; border-bottom: 1px solid #333; }
-        td { padding: 15px 10px; border-bottom: 1px solid #333; vertical-align: middle; }
-        tr:last-child td { border-bottom: none; }
-        .rank-new { color: var(--good); font-weight: bold; }
-        .rank-good { color: #4facfe; }
-        .rank-bad { color: var(--bad); opacity: 0.7; }
-        .btn-copy { background: #333; border: none; color: #fff; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; margin-left: 10px; }
+        .update-time { display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; padding: 5px 15px; background: rgba(255,255,255,0.1); border-radius: 20px; font-size: 0.8rem; }
+        .pulse { width: 8px; height: 8px; background: var(--good); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+
+        /* 통계 카드 */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 20px; }
+        .stat-card { background: var(--card); border-radius: 10px; padding: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .stat-icon { font-size: 1.5rem; margin-bottom: 5px; }
+        .stat-value { font-size: 1.2rem; font-weight: bold; color: #fff; }
+        .stat-label { font-size: 0.8rem; color: #aaa; }
+
+        /* 키워드 카드 (모바일) */
+        .keyword-list-mobile { display: flex; flex-direction: column; gap: 15px; }
+        .keyword-card-mobile { background: var(--card); border-radius: 12px; padding: 15px; border-left: 4px solid transparent; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        
+        .rank-diamond { border-left-color: #00e5ff; background: linear-gradient(90deg, rgba(0,229,255,0.05), transparent); }
+        .rank-gold { border-left-color: #ffd700; background: linear-gradient(90deg, rgba(255,215,0,0.05), transparent); }
+        .rank-silver { border-left-color: #c0c0c0; }
+        .rank-red { border-left-color: var(--bad); opacity: 0.7; }
+
+        .mobile-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .mobile-keyword-rank { background: rgba(255,255,255,0.1); width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; margin-right: 10px; }
+        .mobile-keyword-text { font-size: 1.1rem; font-weight: bold; color: #fff; }
+        .mobile-count-section { margin-bottom: 10px; }
+        .mobile-count-number { font-family: monospace; font-size: 0.9rem; color: #ccc; margin-bottom: 5px; }
+        .mobile-count-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+        .mobile-count-bar-fill { height: 100%; border-radius: 2px; background: var(--accent); }
+        .mobile-actions { display: flex; gap: 10px; margin-top: 10px; }
+
+        /* 테이블 (PC) */
+        .keyword-table-desktop { display: none; }
+        @media (min-width: 768px) {
+            .keyword-list-mobile { display: none; }
+            .keyword-table-desktop { display: block; }
+        }
+        
+        table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 10px; overflow: hidden; }
+        th { background: #2a2a2a; padding: 15px; text-align: left; font-size: 0.9rem; color: #aaa; }
+        td { padding: 15px; border-bottom: 1px solid #333; }
+        
+        /* 공통 요소 */
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; background: rgba(255,255,255,0.1); }
+        .badge-diamond { color: #00e5ff; background: rgba(0,229,255,0.1); }
+        .badge-gold { color: #ffd700; background: rgba(255,215,0,0.1); }
+        .badge-red { color: var(--bad); }
+        
+        .btn { flex: 1; padding: 8px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; text-decoration: none; text-align: center; transition: 0.2s; }
+        .btn-copy { background: rgba(255,255,255,0.1); color: #ccc; }
         .btn-copy:hover { background: var(--accent); color: #000; }
-        .btn-link { color: #bbb; text-decoration: none; font-size: 0.85rem; }
-        .btn-link:hover { color: #fff; text-decoration: underline; }
-        .archive-btn { display: block; width: 100%; padding: 15px; text-align: center; background: #333; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; transition: 0.2s; }
+        .btn-link { background: rgba(3, 218, 198, 0.1); color: var(--good); }
+        .btn-link:hover { background: var(--good); color: #000; }
+        
+        .archive-btn { display: block; width: 100%; padding: 15px; text-align: center; background: #333; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; margin-top: 20px; transition: 0.2s; }
         .archive-btn:hover { background: var(--accent); color: #000; }
+        
+        .nav-btn { display: inline-block; padding: 10px 20px; background: #333; color: #fff; text-decoration: none; border-radius: 20px; margin: 0 5px; }
+        
         .ad-box { text-align: center; margin: 20px 0; background: #1a1a1a; padding: 10px; border-radius: 10px; }
-        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 5px; padding: 16px; position: fixed; z-index: 1; left: 50%; bottom: 30px; transform: translateX(-50%); }
+        
+        #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 5px; padding: 16px; position: fixed; z-index: 99; left: 50%; bottom: 30px; transform: translateX(-50%); }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
-<body><div class="layout-wrapper"><aside class="side-rail"><div style="font-size:0.7rem; color:#555; text-align:center; margin-bottom:5px;">AD</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8772455780561463" data-ad-slot="1662647947" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></aside><main class="main-content"><header><h1>🗄️ 아카이브</h1><p class="subtitle">지난 기록</p></header><div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8772455780561463" data-ad-slot="1662647947" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div class="card"><a href="reports/20251229_0221.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 20251229 : 0221</a><a href="reports/20251229_0212.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 20251229 : 0212</a><a href="reports/20251229_0201.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 20251229 : 0201</a></div><div style="text-align:center; margin-top:30px;"><a href="index.html" class="archive-btn">🏠 메인으로</a></div></main><aside class="side-rail"><div style="font-size:0.7rem; color:#555; text-align:center; margin-bottom:5px;">AD</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8772455780561463" data-ad-slot="1662647947" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></aside></div></body></html>
+    </head><body>
+    <div class="layout-wrapper"><aside class="side-rail"><div style="font-size:0.7rem; color:#555; text-align:center; margin-bottom:5px;">AD</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8772455780561463" data-ad-slot="1662647947" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></aside><main class="main-content"><header><h1>🗄️ 리포트 보관함</h1></header><div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8772455780561463" data-ad-slot="1662647947" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div class="card" style="padding:20px;"><a href="reports/20251229_0303.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 20251229 : 0303</a><a href="reports/20251229_0221.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 20251229 : 0221</a><a href="reports/20251229_0212.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 20251229 : 0212</a><a href="reports/20251229_0201.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 20251229 : 0201</a></div><div style="text-align:center; margin-top:30px;"><a href="index.html" class="archive-btn">🏠 메인으로</a></div></main><aside class="side-rail"><div style="font-size:0.7rem; color:#555; text-align:center; margin-bottom:5px;">AD</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8772455780561463" data-ad-slot="1662647947" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></aside></div></body></html>

@@ -1,135 +1,42 @@
 <!DOCTYPE html><html lang="ko">
-    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🗄️ 리포트 보관함</title>
-    <meta name="description" content="지난 키워드 분석 기록 모음">
+    <title>🗄️ 아카이브</title>
+    <meta name="description" content="지난 기록">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- ✅ Google AdSense (자동 광고) -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8772455780561463"
-         crossorigin="anonymous"></script>
-
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8772455780561463" crossorigin="anonymous"></script>
     <style>
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-        
-        :root {
-            --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --accent: #bb86fc;
-            --good: #03dac6; --bad: #cf6679;
-        }
-        
+        :root { --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --accent: #bb86fc; --good: #03dac6; --bad: #cf6679; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background: var(--bg); color: var(--text); }
-        
-        /* 레이아웃 (사이드레일 광고용) */
-        .layout-wrapper {
-            display: flex; justify-content: center; gap: 20px;
-            max-width: 1400px; margin: 0 auto; padding: 20px;
-        }
-        
-        .side-rail {
-            width: 160px; min-width: 160px; height: 600px;
-            position: sticky; top: 20px; display: none; /* 모바일 숨김 */
-        }
-        
+        .layout-wrapper { display: flex; justify-content: center; gap: 20px; max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .side-rail { width: 160px; min-width: 160px; height: 600px; position: sticky; top: 20px; display: none; }
         .main-content { flex: 1; max-width: 800px; width: 100%; }
-        
         @media (min-width: 1200px) { .side-rail { display: block; } }
-
-        /* 헤더 */
         header { text-align: center; margin-bottom: 30px; }
         h1 { margin: 0; color: #fff; font-size: 2rem; }
         .subtitle { color: #aaa; font-size: 0.9rem; margin-top: 5px; }
-        
-        /* 카드 스타일 */
         .card { background: var(--card); border-radius: 15px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); margin-bottom: 20px; }
-        
-        /* 테이블 */
         table { width: 100%; border-collapse: collapse; }
         th { text-align: left; color: #888; font-size: 0.85rem; padding: 10px; border-bottom: 1px solid #333; }
         td { padding: 15px 10px; border-bottom: 1px solid #333; vertical-align: middle; }
         tr:last-child td { border-bottom: none; }
-        
-        /* 등급별 색상 */
         .rank-new { color: var(--good); font-weight: bold; }
         .rank-good { color: #4facfe; }
         .rank-bad { color: var(--bad); opacity: 0.7; }
-        
-        /* 버튼 */
         .btn-copy { background: #333; border: none; color: #fff; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; margin-left: 10px; }
         .btn-copy:hover { background: var(--accent); color: #000; }
         .btn-link { color: #bbb; text-decoration: none; font-size: 0.85rem; }
         .btn-link:hover { color: #fff; text-decoration: underline; }
-        
-        /* 아카이브 버튼 */
-        .archive-btn {
-            display: block; width: 100%; padding: 15px; text-align: center;
-            background: #333; color: white; text-decoration: none; border-radius: 10px;
-            font-weight: bold; transition: 0.2s;
-        }
+        .archive-btn { display: block; width: 100%; padding: 15px; text-align: center; background: #333; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; transition: 0.2s; }
         .archive-btn:hover { background: var(--accent); color: #000; }
-
-        /* 광고 박스 */
         .ad-box { text-align: center; margin: 20px 0; background: #1a1a1a; padding: 10px; border-radius: 10px; }
-        
-        /* 토스트 메시지 */
         #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 5px; padding: 16px; position: fixed; z-index: 1; left: 50%; bottom: 30px; transform: translateX(-50%); }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
-</head>
-
-    <body>
-        <div class="layout-wrapper">
-            
-    <aside class="side-rail">
-        <div style="font-size:0.7rem; color:#555; text-align:center; margin-bottom:5px;">AD</div>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8772455780561463"
-             data-ad-slot="1662647947"  <!-- 사이드용 슬롯ID가 따로 있으면 교체 권장 -->
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </aside>
-    
-            <main class="main-content">
-                <header>
-                    <h1>🗄️ 리포트 보관함</h1>
-                    <p class="subtitle">지난 분석 기록을 확인하세요</p>
-                </header>
-                
-    <div class="ad-box">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8772455780561463"
-             data-ad-slot="1662647947"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
-    
-                <div class="card">
-                    <a href="reports/20251229_0212.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 리포트 - 20251229 : 0212</a><a href="reports/20251229_0201.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 리포트 - 20251229 : 0201</a>
-                </div>
-                <div style="text-align:center; margin-top:30px;">
-                    <a href="index.html" class="archive-btn">🏠 메인으로 돌아가기</a>
-                </div>
-            </main>
-            
-    <aside class="side-rail">
-        <div style="font-size:0.7rem; color:#555; text-align:center; margin-bottom:5px;">AD</div>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8772455780561463"
-             data-ad-slot="1662647947"  <!-- 사이드용 슬롯ID가 따로 있으면 교체 권장 -->
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </aside>
-    
-        </div>
-    </body></html>
+<body><div class="layout-wrapper"><aside class="side-rail"><div style="font-size:0.7rem; color:#555; text-align:center; margin-bottom:5px;">AD</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8772455780561463" data-ad-slot="1662647947" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></aside><main class="main-content"><header><h1>🗄️ 아카이브</h1><p class="subtitle">지난 기록</p></header><div class="ad-box"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8772455780561463" data-ad-slot="1662647947" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div class="card"><a href="reports/20251229_0221.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 20251229 : 0221</a><a href="reports/20251229_0212.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 20251229 : 0212</a><a href="reports/20251229_0201.html" class="archive-btn" style="margin-bottom:10px; text-align:left;">📄 20251229 : 0201</a></div><div style="text-align:center; margin-top:30px;"><a href="index.html" class="archive-btn">🏠 메인으로</a></div></main><aside class="side-rail"><div style="font-size:0.7rem; color:#555; text-align:center; margin-bottom:5px;">AD</div><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8772455780561463" data-ad-slot="1662647947" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></aside></div></body></html>

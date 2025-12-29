@@ -41,7 +41,6 @@
             overflow-x: hidden;
         }
 
-        /* 배경 그라데이션 */
         body::before {
             content: '';
             position: fixed;
@@ -60,7 +59,6 @@
             50% { transform: translate(-2%, -2%); }
         }
 
-        /* 레이아웃 - 사이드레일 광고 포함 */
         .layout-wrapper {
             display: flex;
             justify-content: center;
@@ -86,14 +84,12 @@
             max-width: 900px;
         }
 
-        /* 데스크톱에서 사이드레일 표시 */
         @media (min-width: 1200px) {
             .side-rail {
                 display: block;
             }
         }
 
-        /* 헤더 */
         header {
             text-align: center;
             margin-bottom: 30px;
@@ -150,7 +146,6 @@
             50% { opacity: 0.5; transform: scale(1.2); }
         }
 
-        /* 통계 카드 */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -202,7 +197,6 @@
             letter-spacing: 1px;
         }
 
-        /* 테이블 광고 삽입용 */
         .ad-row td {
             padding: 0 !important;
         }
@@ -217,7 +211,6 @@
             text-align: center;
         }
 
-        /* 모바일 카드 광고 */
         .ad-box-mobile {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
@@ -504,9 +497,12 @@
             background: linear-gradient(90deg, #f59e0b, #fbbf24);
         }
 
+        /* ✅ 수정: 버튼 가로 정렬 */
         .actions-cell {
             display: flex;
+            flex-direction: row; /* 가로 정렬 */
             gap: 8px;
+            align-items: center;
         }
 
         /* 아카이브 버튼 */
@@ -530,7 +526,6 @@
             transform: scale(0.98);
         }
 
-        /* 토스트 */
         #toast {
             position: fixed;
             bottom: 24px;
@@ -554,7 +549,6 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* 푸터 */
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -562,7 +556,6 @@
             font-size: 0.85rem;
         }
 
-        /* 반응형 */
         @media (min-width: 768px) {
             .keyword-list-mobile { display: none; }
             .keyword-table-desktop { display: block; }
@@ -610,7 +603,7 @@
     
             
             <div style="display:flex; flex-direction:column; gap:10px;">
-                <a href="reports/20251229_0324.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0324</a><a href="reports/20251229_0312.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0312</a><a href="reports/20251229_0303.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0303</a><a href="reports/20251229_0221.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0221</a><a href="reports/20251229_0212.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0212</a><a href="reports/20251229_0201.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0201</a>
+                <a href="reports/20251229_0334.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0334</a><a href="reports/20251229_0324.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0324</a><a href="reports/20251229_0312.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0312</a><a href="reports/20251229_0303.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0303</a><a href="reports/20251229_0221.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0221</a><a href="reports/20251229_0212.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0212</a><a href="reports/20251229_0201.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0201</a>
             </div>
             
             

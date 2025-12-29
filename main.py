@@ -341,3 +341,8 @@ def create_site():
 
 if __name__ == "__main__":
     create_site()
+
+    import cleanup
+if __name__ == "__main__":
+    create_site()
+    cleanup.cleanup_old_reports() # [추가] 사이트 생성 후 청소 실행

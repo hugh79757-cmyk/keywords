@@ -9,6 +9,7 @@ import datetime
 import os
 import re
 import xml.etree.ElementTree as ET
+from zoneinfo import ZoneInfo  # Python 3.9+
 
 # ==========================================
 # 🔑 API 키
@@ -49,7 +50,7 @@ def get_seo_meta_tags(page_type="index"):
     """
 
 # ==========================================
-# 🎨 개선된 스타일
+# 🎨 수정된 스타일
 # ==========================================
 def get_optimized_style():
     return """
@@ -218,7 +219,6 @@ def get_optimized_style():
         }
         .stat-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 5px; }
 
-        /* 광고 박스 */
         .ad-box {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -261,7 +261,6 @@ def get_optimized_style():
             text-align: center;
         }
 
-        /* 모바일 카드 */
         .keyword-list-mobile {
             display: flex;
             flex-direction: column;
@@ -393,6 +392,7 @@ def get_optimized_style():
 
         .mobile-actions {
             display: flex;
+            flex-direction: row !important; /* 강제 가로 */
             gap: 8px;
         }
 
@@ -408,6 +408,7 @@ def get_optimized_style():
             text-align: center;
             transition: all 0.2s;
             -webkit-tap-highlight-color: transparent;
+            display: inline-block; /* 인라인 블록 */
         }
 
         .btn-copy {
@@ -428,7 +429,6 @@ def get_optimized_style():
             transform: scale(0.95);
         }
 
-        /* 데스크톱 테이블 */
         .keyword-table-desktop {
             display: none;
             background: var(--glass-bg);
@@ -537,15 +537,14 @@ def get_optimized_style():
             background: linear-gradient(90deg, #f59e0b, #fbbf24);
         }
 
-        /* ✅ 수정: 버튼 가로 정렬 */
+        /* ✅ 수정: 데스크톱 버튼 가로 정렬 강화 */
         .actions-cell {
-            display: flex;
-            flex-direction: row; /* 가로 정렬 */
-            gap: 8px;
-            align-items: center;
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 8px !important;
+            align-items: center !important;
         }
 
-        /* 아카이브 버튼 */
         .archive-btn {
             display: block;
             width: 100%;
@@ -638,10 +637,10 @@ def get_side_rail_ad():
     """
 
 # ==========================================
-# 1. 키워드 수집 (숫자 제거)
+# 1. 키워드 수집
 # ==========================================
 def get_keywords_from_farm():
-    print("🚗 애드센스팜 크롤링 시작...")
+    print("🚗 애드센스팜 크롤링...")
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
@@ -663,14 +662,12 @@ def get_keywords_from_farm():
         for elem in elements:
             text = elem.text.strip()
             if 2 <= len(text) < 30:
-                # 정규식으로 앞쪽 숫자 제거
                 clean = re.sub(r'^[\d\s.]+', '', text).strip()
-                
                 if clean and not clean.isdigit() and clean not in ["순위", "키워드", "검색량", "조회수"]:
                     raw_keywords.append(clean)
         
         unique_keywords = list(dict.fromkeys(raw_keywords))
-        print(f"✅ {len(unique_keywords)}개 키워드 수집")
+        print(f"✅ {len(unique_keywords)}개 수집")
         return unique_keywords[:40]
         
     except Exception as e:
@@ -680,7 +677,7 @@ def get_keywords_from_farm():
         driver.quit()
 
 def get_keywords_from_google():
-    print("⚠️ 백업: 구글 트렌드 RSS")
+    print("⚠️ 백업: 구글 트렌드")
     url = "https://trends.google.com/trends/trendingsearches/daily/rss?geo=KR"
     try:
         res = requests.get(url, timeout=10)
@@ -725,10 +722,10 @@ def get_blog_count(keyword):
 def create_seo_optimized_dashboard():
     keywords = get_keywords_from_farm()
     if not keywords:
-        print("🚨 메인 실패 → 백업 사용")
+        print("🚨 메인 실패 → 백업")
         keywords = get_keywords_from_google()
     
-    print(f"📊 {len(keywords)}개 키워드 분석 중...")
+    print(f"📊 {len(keywords)}개 분석 중...")
     
     data = []
     for word in keywords:
@@ -773,8 +770,6 @@ def create_seo_optimized_dashboard():
         link = f"https://search.naver.com/search.naver?where=view&sm=tab_jum&query={item['word']}"
         bar_width = min((item['count'] / max_count) * 100, 100)
         
-        # ✅ 모바일: 5개마다 / 데스크톱: 7개마다
-        # 모바일 광고 (5개마다)
         if idx > 0 and idx % 5 == 0:
             mobile_cards += f"""
             <div class="ad-box-mobile">
@@ -784,7 +779,6 @@ def create_seo_optimized_dashboard():
             </div>
             """
         
-        # 데스크톱 광고 (7개마다)
         if idx > 0 and idx % 7 == 0:
             desktop_rows += f"""
             <tr class="ad-row">
@@ -798,7 +792,6 @@ def create_seo_optimized_dashboard():
             </tr>
             """
         
-        # 테이블 행
         desktop_rows += f"""
         <tr class="{item['css']}">
             <td>
@@ -825,7 +818,6 @@ def create_seo_optimized_dashboard():
         </tr>
         """
         
-        # 모바일 카드
         mobile_cards += f"""
         <div class="keyword-card-mobile {item['css']}">
             <div class="mobile-card-header">
@@ -846,8 +838,18 @@ def create_seo_optimized_dashboard():
         </div>
         """
     
-    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-    file_date = datetime.datetime.now().strftime("%Y%m%d_%H%M")
+    # ✅ 한국 시간으로 변환 (UTC+9)
+    try:
+        # Python 3.9+
+        kst = datetime.datetime.now(ZoneInfo("Asia/Seoul"))
+        now = kst.strftime("%Y-%m-%d %H:%M")
+        file_date = kst.strftime("%Y%m%d_%H%M")
+    except:
+        # 폴백: 수동으로 9시간 더하기
+        utc_now = datetime.datetime.utcnow()
+        kst_now = utc_now + datetime.timedelta(hours=9)
+        now = kst_now.strftime("%Y-%m-%d %H:%M")
+        file_date = kst_now.strftime("%Y%m%d_%H%M")
     
     style = get_optimized_style()
     seo_meta = get_seo_meta_tags("index")
@@ -908,7 +910,7 @@ def create_seo_optimized_dashboard():
                 <p class="subtitle">실시간 트렌드 키워드 분석</p>
                 <div class="update-time">
                     <span class="pulse"></span>
-                    <span>{now} 업데이트</span>
+                    <span>{now} 업데이트 (KST)</span>
                 </div>
             </header>
             
@@ -939,7 +941,7 @@ def create_seo_optimized_dashboard():
             
             <a href="archive.html" class="archive-btn">🗄️ 지난 리포트 보기</a>
             
-            <footer>© 2025 황금 키워드 상황실</footer>
+            <footer>© 2026 키워드 롯차 </footer>
         </main>
         
         {get_side_rail_ad()}
@@ -962,7 +964,7 @@ def create_seo_optimized_dashboard():
     
     create_archive_page()
     
-    print("✅ 대시보드 완성!")
+    print(f"✅ 완성! ({now})")
     print(f"💎 블루오션: {diamond_cnt}개 | 🥇 꿀통: {gold_cnt}개")
 
 # ==========================================

@@ -85,260 +85,859 @@ def get_optimized_style():
         @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
         
         :root {
-            /* 배경 및 기본 컬러 */
-            --bg-body: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --bg-card-hover: rgba(51, 65, 85, 0.8);
-            
-            /* 텍스트 컬러 */
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --text-muted: #64748b;
-            
-            /* 등급별 포인트 컬러 (네온 효과) */
-            --color-diamond: #22d3ee;
-            --color-gold: #fbbf24;
-            --color-silver: #94a3b8;
-            --color-red: #f87171;
-            --color-accent: #8b5cf6;
-            
-            /* 글래스모피즘 */
-            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
-            --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent-primary: #8b5cf6;
+            --accent-secondary: #06b6d4;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Pretendard', -apple-system, sans-serif;
-            background: var(--bg-body);
-            color: var(--text-main);
+            background: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.5;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(34, 211, 238, 0.15), transparent 25%);
-            background-attachment: fixed;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* 레이아웃 */
-        .layout-wrapper {
-            display: flex; justify-content: center; gap: 24px;
-            max-width: 1440px; margin: 0 auto; padding: 20px;
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: 0;
+            animation: bgFloat 20s ease-in-out infinite;
         }
-        
+
+        @keyframes bgFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-2%, -2%); }
+        }
+
+        .layout-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
         .side-rail {
-            width: 160px; min-width: 160px;
-            position: sticky; top: 20px; height: fit-content;
+            width: 160px;
+            min-width: 160px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
             display: none;
         }
-        
-        .main-content { flex: 1; max-width: 860px; width: 100%; }
-        
-        @media (min-width: 1200px) { .side-rail { display: block; } }
 
-        /* 헤더 */
-        header { text-align: center; margin-bottom: 32px; padding-top: 20px; }
-        
-        .logo { font-size: 3.5rem; margin-bottom: 10px; display: inline-block; animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        
+        .main-content {
+            flex: 1;
+            max-width: 900px;
+        }
+
+        @media (min-width: 1200px) {
+            .side-rail { display: block; }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 30px 20px;
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
         h1 {
-            font-size: 2.2rem; font-weight: 800; margin: 0;
-            background: linear-gradient(135deg, #fff, #94a3b8);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f8fafc, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
         }
-        
-        .subtitle { color: var(--text-sub); font-size: 1rem; margin-top: 8px; }
-        
-        .update-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            margin-top: 16px; padding: 6px 14px;
-            background: rgba(34, 211, 238, 0.1);
-            border: 1px solid rgba(34, 211, 238, 0.2);
-            border-radius: 20px; color: var(--color-diamond); font-size: 0.85rem; font-weight: 600;
-        }
-        .pulse-dot { width: 8px; height: 8px; background: currentColor; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
 
-        /* 액션 바 (리뉴얼) */
+        .subtitle { color: var(--text-secondary); font-size: 0.95rem; }
+
+        .update-time {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            font-size: 0.85rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .pulse {
+            width: 8px; height: 8px;
+            background: var(--accent-success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* ==========================================
+           📌 액션 바 (북마크 + PWA + 공유)
+           ========================================== */
         .action-bar {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border: var(--glass-border);
-            border-radius: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
             padding: 20px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        .action-bar-title {
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .action-bar-title::before,
+        .action-bar-title::after {
+            content: '';
+            flex: 1;
+            max-width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .action-btn .icon {
+            font-size: 1.1rem;
+        }
+
+        /* 특별 버튼 스타일 */
+        .action-btn.pwa-btn {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2));
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .action-btn.pwa-btn:hover {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3));
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        .action-btn.bookmark-btn {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .action-btn.bookmark-btn:hover {
+            background: rgba(245, 158, 11, 0.25);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
+        }
+
+        /* SNS 공유 버튼 색상 */
+        .share-divider {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0 5px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .share-divider::before,
+        .share-divider::after {
+            content: '';
+            flex: 1;
+            max-width: 40px;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        .share-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .share-btn {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .share-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 각 SNS 색상 */
+        .share-btn.kakao {
+            background: #FEE500;
+            color: #3C1E1E;
+        }
+        .share-btn.kakao:hover {
+            box-shadow: 0 8px 20px rgba(254, 229, 0, 0.4);
+        }
+
+        .share-btn.twitter {
+            background: #1DA1F2;
+            color: white;
+        }
+        .share-btn.twitter:hover {
+            box-shadow: 0 8px 20px rgba(29, 161, 242, 0.4);
+        }
+
+        .share-btn.threads {
+            background: linear-gradient(135deg, #000000, #333333);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .share-btn.threads:hover {
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .share-btn.naver {
+            background: #03C75A;
+            color: white;
+        }
+        .share-btn.naver:hover {
+            box-shadow: 0 8px 20px rgba(3, 199, 90, 0.4);
+        }
+
+        .share-btn.facebook {
+            background: #1877F2;
+            color: white;
+        }
+        .share-btn.facebook:hover {
+            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.4);
+        }
+
+        .share-btn.copy-link {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+        .share-btn.copy-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        /* 북마크 팁 팝업 */
+        .bookmark-tip {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(139, 92, 246, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 16px 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            z-index: 1001;
+            max-width: 90%;
+            animation: slideUp 0.4s ease;
+        }
+
+        .bookmark-tip.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateX(-50%) translateY(30px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
+        .bookmark-tip-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+        }
+
+        .bookmark-tip-icon {
+            font-size: 2rem;
+        }
+
+        .bookmark-tip-text h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .bookmark-tip-text p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .bookmark-tip-text kbd {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            margin: 0 2px;
+        }
+
+        .bookmark-tip-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .bookmark-tip-close:hover {
+            opacity: 1;
+        }
+
+        /* 기존 스타일 계속... */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+        }
+
+        .stat-icon { font-size: 2rem; margin-bottom: 8px; }
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f8fafc, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 5px; }
+
+        .ad-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .ad-label {
+            font-size: 0.7rem;
+            color: #555;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ad-row td { padding: 0 !important; }
+
+        .ad-box-table {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .ad-box-mobile {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .keyword-list-mobile {
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            align-items: center;
+            gap: 12px;
         }
-        
-        .action-row {
-            display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 100%;
-        }
-        
-        .btn-action {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 10px 18px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: var(--text-main); font-size: 0.9rem; font-weight: 600;
-            cursor: pointer; transition: all 0.2s ease;
-        }
-        .btn-action:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
-        .btn-primary { background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(34, 211, 238, 0.3)); border-color: rgba(139, 92, 246, 0.4); }
-        
-        .sns-btn {
-            width: 42px; height: 42px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; color: #fff; text-decoration: none;
-            transition: all 0.2s ease;
-        }
-        .sns-btn:hover { transform: scale(1.1); box-shadow: 0 0 15px rgba(255,255,255,0.2); }
-        
-        /* 통계 카드 */
-        .stats-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;
-        }
-        .stat-card {
-            background: var(--bg-card); border: var(--glass-border);
-            border-radius: 16px; padding: 16px; text-align: center;
-        }
-        .stat-val { font-size: 1.5rem; font-weight: 800; color: var(--text-main); }
-        .stat-label { font-size: 0.8rem; color: var(--text-sub); margin-top: 4px; }
-        
-        /* 테이블 (PC) */
-        .keyword-table-desktop {
-            background: var(--bg-card); border: var(--glass-border);
-            border-radius: 20px; overflow: hidden; display: none;
-        }
-        table { width: 100%; border-collapse: collapse; }
-        th { 
-            text-align: left; padding: 16px 24px; 
-            color: var(--text-sub); font-size: 0.85rem; font-weight: 600;
-            border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.2);
-        }
-        td { padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: middle; }
-        tr:hover td { background: var(--bg-card-hover); }
-        
-        /* 키워드 셀 */
-        .kwd-wrapper { display: flex; align-items: center; gap: 12px; }
-        .rank-badge {
-            width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
-            border-radius: 8px; font-weight: 700; font-size: 0.85rem;
-            background: rgba(255,255,255,0.05); color: var(--text-sub);
-        }
-        .kwd-text { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.02em; cursor: pointer; }
-        
-        /* 랭크 스타일 */
-        .r-diamond .rank-badge { background: rgba(34, 211, 238, 0.2); color: var(--color-diamond); }
-        .r-diamond .kwd-text { color: var(--color-diamond); text-shadow: 0 0 10px rgba(34, 211, 238, 0.3); }
-        
-        .r-gold .rank-badge { background: rgba(251, 191, 36, 0.2); color: var(--color-gold); }
-        .r-gold .kwd-text { color: var(--color-gold); }
-        
-        .r-red .kwd-text { color: var(--text-muted); text-decoration: line-through; }
 
-        /* 모바일 카드 */
-        .keyword-list-mobile { display: flex; flex-direction: column; gap: 12px; }
-        .m-card {
-            background: var(--bg-card); border: var(--glass-border); border-radius: 16px;
-            padding: 16px; position: relative; overflow: hidden;
+        .keyword-card-mobile {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-left: 4px solid transparent;
+            border-radius: 16px;
+            padding: 16px;
+            transition: all 0.3s;
         }
-        .m-card::before {
-            content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+
+        .keyword-card-mobile:active { transform: scale(0.98); }
+
+        .rank-diamond {
+            border-left-color: #06b6d4;
+            background: linear-gradient(90deg, rgba(6,182,212,0.05), transparent);
         }
-        .m-card.r-diamond::before { background: var(--color-diamond); box-shadow: 0 0 10px var(--color-diamond); }
-        .m-card.r-gold::before { background: var(--color-gold); }
-        
-        .m-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .m-rank { font-size: 0.9rem; color: var(--text-sub); font-weight: 600; }
-        .m-kwd { font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
-        .r-diamond .m-kwd { color: var(--color-diamond); }
-        
-        .m-stat { display: flex; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px; margin-bottom: 12px; }
-        .m-stat span { font-size: 0.85rem; color: var(--text-sub); }
-        .m-stat strong { font-family: monospace; font-size: 1rem; color: var(--text-main); }
-        
-        /* 버튼 공통 */
-        .btn-sm {
-            padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 500;
-            border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
-            color: var(--text-sub); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;
+        .rank-gold {
+            border-left-color: #f59e0b;
+            background: linear-gradient(90deg, rgba(245,158,11,0.05), transparent);
         }
-        .btn-sm:hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
-        
+        .rank-silver { border-left-color: #6b7280; }
+        .rank-red { border-left-color: #ef4444; opacity: 0.6; }
+
+        .mobile-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .mobile-keyword-rank {
+            min-width: 32px; height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .rank-diamond .mobile-keyword-rank {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.3));
+            color: #06b6d4;
+        }
+
+        .mobile-keyword-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .rank-diamond .mobile-keyword-text {
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .rank-gold .mobile-keyword-text { color: #fbbf24; }
+
+        .mobile-count-section { margin-bottom: 12px; }
+        .mobile-count-number {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .rank-diamond .mobile-count-number { color: #06b6d4; }
+        .rank-gold .mobile-count-number { color: #fbbf24; }
+
+        .mobile-count-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .mobile-count-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        .rank-diamond .mobile-count-bar-fill {
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6);
+        }
+        .rank-gold .mobile-count-bar-fill {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+        }
+
         .badge {
-            padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
+            display: inline-flex;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
         }
-        .badge-new { background: rgba(34, 211, 238, 0.15); color: var(--color-diamond); border: 1px solid rgba(34, 211, 238, 0.3); }
-        .badge-good { background: rgba(251, 191, 36, 0.15); color: var(--color-gold); border: 1px solid rgba(251, 191, 36, 0.3); }
-        
-        /* 미디어 쿼리 */
+
+        .badge-diamond {
+            background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(139,92,246,0.2));
+            border: 1px solid rgba(6,182,212,0.3);
+            color: #06b6d4;
+        }
+        .badge-gold {
+            background: rgba(245,158,11,0.2);
+            border: 1px solid rgba(245,158,11,0.3);
+            color: #fbbf24;
+        }
+        .badge-silver {
+            background: rgba(107,114,128,0.15);
+            border: 1px solid rgba(107,114,128,0.3);
+            color: #9ca3af;
+        }
+        .badge-red {
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #f87171;
+        }
+
+        .mobile-actions {
+            display: flex;
+            flex-direction: row !important;
+            gap: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            display: inline-block;
+        }
+
+        .btn-copy {
+            background: rgba(255,255,255,0.08);
+            color: var(--text-primary);
+        }
+        .btn-copy:active {
+            background: rgba(139,92,246,0.3);
+            transform: scale(0.95);
+        }
+
+        .btn-link {
+            background: rgba(6,182,212,0.15);
+            color: #06b6d4;
+        }
+        .btn-link:active {
+            background: rgba(6,182,212,0.3);
+            transform: scale(0.95);
+        }
+
+        .keyword-table-desktop {
+            display: none;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        thead { background: rgba(0, 0, 0, 0.3); }
+
+        th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.2s;
+        }
+
+        tbody tr:hover { background: rgba(255, 255, 255, 0.05); }
+
+        td { padding: 16px 20px; vertical-align: middle; }
+
+        .keyword-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .keyword-rank {
+            width: 28px; height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .rank-diamond .keyword-rank {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.3));
+            color: #06b6d4;
+        }
+
+        .keyword-text { font-weight: 600; font-size: 1rem; }
+
+        .rank-diamond .keyword-text {
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .rank-gold .keyword-text { color: #fbbf24; }
+
+        .count-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .count-text {
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .count-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .count-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        .rank-diamond .count-bar-fill {
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6);
+        }
+        .rank-gold .count-bar-fill {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+        }
+
+        .actions-cell {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 8px !important;
+            align-items: center !important;
+        }
+
+        .archive-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin-top: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: var(--text-primary);
+            text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .archive-btn:active { transform: scale(0.98); }
+
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(16, 185, 129, 0.95);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        #toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
         @media (min-width: 768px) {
             .keyword-list-mobile { display: none; }
             .keyword-table-desktop { display: block; }
+            h1 { font-size: 2.5rem; }
+            .logo { font-size: 3.5rem; }
         }
-        @media (max-width: 767px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            h1 { font-size: 1.8rem; }
-            .logo { font-size: 2.5rem; }
-        }
-        
-        /* 토스트 & 아카이브 */
-        .archive-link {
-            display: block; text-align: center; margin-top: 40px; padding: 16px;
-            background: var(--bg-card); border-radius: 16px; border: var(--glass-border);
-            color: var(--text-main); text-decoration: none; font-weight: 600;
-            transition: 0.2s;
-        }
-        .archive-link:hover { background: var(--bg-card-hover); border-color: var(--color-accent); }
-        
-        #toast {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
-            background: var(--color-accent); color: white; padding: 12px 24px; border-radius: 30px;
-            font-weight: 600; opacity: 0; visibility: hidden; transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4); z-index: 9999;
-        }
-        #toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-        
-        .ad-container { margin: 24px 0; text-align: center; border-radius: 12px; overflow: hidden; background: rgba(0,0,0,0.2); padding: 10px; }
     </style>
     """
-
 
 # ==========================================
 # 📌 액션 바 HTML (북마크 + PWA + 공유)
 # ==========================================
 def get_action_bar_html():
     return f"""
+    <!-- 액션 바: 북마크 + PWA + 공유 -->
     <div class="action-bar">
-        <!-- 1행: 메인 기능 버튼 -->
-        <div class="action-row">
-            <button class="btn-action btn-primary" id="installBtn" style="display:none;" onclick="installPWA()">
-                <i class="fas fa-download"></i> 앱 설치
+        <div class="action-bar-title">빠른 저장 & 공유</div>
+        
+        <!-- 메인 액션 버튼들 -->
+        <button class="action-btn pwa-btn" id="installBtn" style="display:none;" onclick="installPWA()">
+            <span class="icon">📲</span>
+            <span>앱으로 저장</span>
+        </button>
+        
+        <button class="action-btn bookmark-btn" onclick="showBookmarkTip()">
+            <span class="icon">⭐</span>
+            <span>북마크 추가</span>
+        </button>
+        
+        <button class="action-btn" onclick="copyPageLink()">
+            <span class="icon">🔗</span>
+            <span>링크 복사</span>
+        </button>
+        
+        <!-- SNS 공유 버튼들 -->
+        <div class="share-divider">SNS 공유</div>
+        
+        <div class="share-buttons">
+            <button class="share-btn kakao" onclick="shareKakao()" title="카카오톡">
+                💬
             </button>
-            <button class="btn-action" onclick="showBookmarkTip()">
-                <i class="fas fa-star"></i> 북마크
-            </button>
-            <button class="btn-action" onclick="copyPageLink()">
-                <i class="fas fa-link"></i> 링크복사
+            <a href="https://twitter.com/intent/tweet?url={SITE_URL}&text=🚀 황금 키워드 상황실 - 실시간 블루오션 키워드 분석" target="_blank" class="share-btn twitter" title="X (트위터)">
+                𝕏
+            </a>
+            <a href="https://www.threads.net/intent/post?text=🚀 황금 키워드 상황실 - 실시간 블루오션 키워드 분석 {SITE_URL}" target="_blank" class="share-btn threads" title="스레드">
+                @
+            </a>
+            <a href="https://blog.naver.com/openapi/share?url={SITE_URL}&title=황금 키워드 상황실" target="_blank" class="share-btn naver" title="네이버 블로그">
+                N
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={SITE_URL}" target="_blank" class="share-btn facebook" title="페이스북">
+                f
+            </a>
+            <button class="share-btn copy-link" onclick="copyPageLink()" title="링크 복사">
+                📋
             </button>
         </div>
-        
-        <!-- 2행: SNS 공유 -->
-        <div class="action-row" style="margin-top:5px; gap:12px;">
-            <a href="javascript:shareKakao()" class="sns-btn" style="background:#FEE500; color:#3C1E1E;"><i class="fas fa-comment"></i></a>
-            <a href="https://twitter.com/intent/tweet?url={SITE_URL}" target="_blank" class="sns-btn" style="background:#000;"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="https://blog.naver.com/openapi/share?url={SITE_URL}" target="_blank" class="sns-btn" style="background:#03C75A;"><i class="fa-solid fa-n"></i></a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u={SITE_URL}" target="_blank" class="sns-btn" style="background:#1877F2;"><i class="fab fa-facebook-f"></i></a>
-        </div>
-        
-        <!-- 북마크 팁 팝업 (숨김) -->
-        <div class="bookmark-tip" id="bookmarkTip" style="display:none; /* 스타일은 CSS에서 제어 */">
-            <!-- (기존 팝업 내용과 동일) -->
+    </div>
+    
+    <!-- 북마크 안내 팝업 -->
+    <div class="bookmark-tip" id="bookmarkTip">
+        <button class="bookmark-tip-close" onclick="closeBookmarkTip()">✕</button>
+        <div class="bookmark-tip-content">
+            <span class="bookmark-tip-icon">⭐</span>
+            <div class="bookmark-tip-text">
+                <h4>브라우저 북마크 추가하기</h4>
+                <p>
+                    <strong>PC:</strong> <kbd>Ctrl</kbd> + <kbd>D</kbd><br>
+                    <strong>Mac:</strong> <kbd>⌘</kbd> + <kbd>D</kbd><br>
+                    <strong>모바일:</strong> 공유 버튼 → 북마크 추가
+                </p>
+            </div>
         </div>
     </div>
     """
@@ -631,56 +1230,53 @@ def create_seo_optimized_dashboard():
     for word in keywords:
         count = get_blog_count(word)
 
-        # 등급별 CSS 클래스 매핑
-    if count < 100:
-        grade = "💎 신생"; row_css = "r-diamond"; badge_css = "badge-new"
-    elif count < 1000:
-        grade = "🥇 꿀통"; row_css = "r-gold"; badge_css = "badge-good"
-    elif count < 5000:
-        grade = "🥈 보통"; row_css = "r-silver"; badge_css = ""
-    else:
-        grade = "💀 레드"; row_css = "r-red"; badge_css = ""
+        if count < 100:
+            grade = "💎 신생 블루오션"
+            css = "rank-diamond"
+            badge = "badge-diamond"
+        elif count < 1000:
+            grade = "🥇 꿀통 키워드"
+            css = "rank-gold"
+            badge = "badge-gold"
+        elif count < 5000:
+            grade = "🥈 보통"
+            css = "rank-silver"
+            badge = "badge-silver"
+        else:
+            grade = "💀 레드오션"
+            css = "rank-red"
+            badge = "badge-red"
 
-    # 데스크톱 행 (수정됨)
-    desktop_rows += f"""
-    <tr class="{row_css}">
-        <td>
-            <div class="kwd-wrapper">
-                <span class="rank-badge">{idx+1}</span>
-                <span class="kwd-text" onclick="copyKeyword('{item['word']}')">{item['word']}</span>
+        data.append({
+            "word": word,
+            "count": count,
+            "grade": grade,
+            "css": css,
+            "badge": badge
+        })
+        time.sleep(0.05)
+
+    data.sort(key=lambda x: x['count'])
+
+    diamond_cnt = len([d for d in data if d['css'] == 'rank-diamond'])
+    gold_cnt = len([d for d in data if d['css'] == 'rank-gold'])
+    max_count = max([d['count'] for d in data]) if data else 10000
+
+    desktop_rows = ""
+    mobile_cards = ""
+
+    for idx, item in enumerate(data):
+        link = f"https://search.naver.com/search.naver?where=view&sm=tab_jum&query={item['word']}"
+        bar_width = min((item['count'] / max_count) * 100, 100)
+
+        if idx > 0 and idx % 5 == 0:
+            mobile_cards += f"""
+            <div class="ad-box-mobile">
+                <div class="ad-label">Advertisement</div>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="{PUB_ID}" data-ad-slot="{SLOT_ID}" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
             </div>
-        </td>
-        <td>{format(item['count'], ',')}</td>
-        <td><span class="badge {badge_css}">{item['grade']}</span></td>
-        <td>
-            <div style="display:flex; gap:6px;">
-                <button class="btn-sm" onclick="copyKeyword('{item['word']}')"><i class="fas fa-copy"></i></button>
-                <a href="{link}" target="_blank" class="btn-sm"><i class="fas fa-external-link-alt"></i></a>
-            </div>
-        </td>
-    </tr>
-    """
-    
-    # 모바일 카드 (수정됨)
-    mobile_cards += f"""
-    <div class="m-card {row_css}">
-        <div class="m-header">
-            <span class="m-rank">#{idx+1}</span>
-            <span class="badge {badge_css}">{item['grade']}</span>
-        </div>
-        <div class="m-kwd" onclick="copyKeyword('{item['word']}')">{item['word']}</div>
-        <div style="margin:12px 0;">
-            <div class="m-stat">
-                <span>블로그 문서수</span>
-                <strong>{format(item['count'], ',')}건</strong>
-            </div>
-        </div>
-        <div style="display:flex; gap:10px;">
-            <button class="btn-sm" style="flex:1; justify-content:center;" onclick="copyKeyword('{item['word']}')">키워드 복사</button>
-            <a href="{link}" target="_blank" class="btn-sm" style="flex:1; justify-content:center;">네이버 분석</a>
-        </div>
-    </div>
-    """
+            """
 
         if idx > 0 and idx % 7 == 0:
             desktop_rows += f"""

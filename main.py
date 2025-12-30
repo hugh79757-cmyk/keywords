@@ -1438,8 +1438,8 @@ def create_seo_optimized_dashboard():
     <div class="seo-guide-box">
         <h4>📈 블로그 수익화 & SEO 최적화 가이드</h4>
         <p>
-            본 데이터는 <strong>네이버 블로그, 티스토리, 워드프레스, 구글 SEO</strong> 최적화를 위한 실시간 분석 자료입니다.
-            황금 키워드를 활용하여 <strong>애드센스 수익, 제휴 마케팅, 웹사이트 트래픽</strong>을 극대화하세요.
+            본 데이터는 다음, 구글, 줌 등의 검색 사이트에서 실시간으로 검색되는 키워드 순위를 파악한 후, 검색 상위에 오른 키워드의 네이버 블로그 문서수를 파악한 데이터입니다. <strong>네이버 블로그, 티스토리, 워드프레스, 구글 SEO</strong> 검색 노출에 최적화돤 키워드를 실시간으로 분석한 자료입니다.
+            황금 키워드 상황실을 활용하여 <strong>애드센스 수익, 제휴 마케팅, 웹사이트 트래픽</strong>등 여러 방면에 응용이 가능합니다. 본 자료를 이용해서 충분한 트래픽을 모아보세요.
         </p>
         <div class="seo-keywords">
             <span class="seo-tag">도메인 등록</span>
@@ -1454,7 +1454,7 @@ def create_seo_optimized_dashboard():
         <p class="seo-sub">
             <strong>디지털 마케팅, SaaS 솔루션, 온라인 비즈니스, 이커머스 플랫폼, 
             결제 시스템, CRM 소프트웨어, ERP 시스템, 클라우드 컴퓨팅</strong> 
-            등 고수익 키워드 전략 수립에 활용하세요.
+            과는 상관이 없는 이슈 키워드 위주로 다루는 사이트의 전략 수립에 활용하세요.
         </p>
     </div>
     """
@@ -1462,11 +1462,11 @@ def create_seo_optimized_dashboard():
     # ✅ 중간 SEO 콘텐츠 (키워드 중간에 삽입용)
     mid_seo_content = """
     <div class="seo-guide-box mid-content">
-        <h4>💰 고수익 키워드 활용 전략</h4>
+        <h4> 키워드 활용 전략</h4>
         <p>
             <strong>보험 비교, 대출 금리, 신용카드 추천, 주식 투자, 부동산 투자, 
-            법률 상담, 세무 상담, 건강 보험</strong> 등 CPC 단가가 높은 키워드와 
-            연계하여 블로그 콘텐츠를 작성하면 광고 수익을 극대화할 수 있습니다.
+            법률 상담, 세무 상담, 건강 보험</strong> 등 다양한 블로그가 존재하지만 
+            황금 키워드 상황실의 자료는 이슈를 다루는 콘텐츠에 유용하게 사용될 수 있습니다.
         </p>
         <div class="seo-keywords">
             <span class="seo-tag">보험 비교</span>
@@ -1599,6 +1599,8 @@ def create_seo_optimized_dashboard():
                     </tbody>
                 </table>
             </div>
+            <!-- SEO 가이드를 하단으로 이동 -->
+            {seo_guide_html}
             
             <!-- 중간 SEO 콘텐츠 (고단가 키워드) -->
             {mid_seo_content}

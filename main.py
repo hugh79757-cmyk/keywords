@@ -1578,11 +1578,6 @@ def create_seo_optimized_dashboard():
             
             {stats_html}
             
-            <!-- 상단 SEO 가이드 -->
-            {seo_guide_html}
-            
-            {get_ad_unit()}
-            
             <!-- 모바일 키워드 리스트 -->
             <div class="keyword-list-mobile">
                 {mobile_cards}

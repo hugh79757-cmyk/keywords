@@ -2,43 +2,193 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://keywords.rotcha.kr/</loc>
-    <lastmod>2025-12-29</lastmod>
+    <lastmod>2025-12-30</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://keywords.rotcha.kr/archive.html</loc>
-    <lastmod>2025-12-29</lastmod>
+    <lastmod>2025-12-30</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://keywords.rotcha.kr/reports/20251229_0221.html</loc>
-    <lastmod>2025-12-29</lastmod>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_1800.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_1317.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_0354.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_1855.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_2347.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_1254.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_1950.html</loc>
+    <lastmod>2025-12-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://keywords.rotcha.kr/reports/20251229_0312.html</loc>
-    <lastmod>2025-12-29</lastmod>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_0544.html</loc>
+    <lastmod>2025-12-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://keywords.rotcha.kr/reports/20251229_0303.html</loc>
-    <lastmod>2025-12-29</lastmod>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_1403.html</loc>
+    <lastmod>2025-12-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://keywords.rotcha.kr/reports/20251229_0201.html</loc>
-    <lastmod>2025-12-29</lastmod>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_0240.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_0834.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_0152.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_2250.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_0741.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_0324.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_1206.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_0041.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_1129.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_1226.html</loc>
+    <lastmod>2025-12-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://keywords.rotcha.kr/reports/20251229_0212.html</loc>
-    <lastmod>2025-12-29</lastmod>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_1241.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_0334.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_1603.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_0428.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251230_0633.html</loc>
+    <lastmod>2025-12-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://keywords.rotcha.kr/reports/20251229_2034.html</loc>
+    <lastmod>2025-12-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

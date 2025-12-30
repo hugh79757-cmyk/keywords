@@ -299,7 +299,7 @@ def get_optimized_style():
             box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
         }
 
-        /* SNS 공유 버튼 색상 */
+        /* SNS 공유 버튼 섹션 */
         .share-divider {
             width: 100%;
             display: flex;
@@ -350,53 +350,60 @@ def get_optimized_style():
             transform: scale(0.95);
         }
 
-        /* 각 SNS 색상 */
+        /* ===== SNS 버튼 색상 (수정됨) ===== */
+        
+        /* 카카오톡 - 노란 배경 */
         .share-btn.kakao {
             background: #FEE500;
-            color: #3C1E1E;
         }
+
         .share-btn.kakao:hover {
-            box-shadow: 0 8px 20px rgba(254, 229, 0, 0.4);
+            box-shadow: 0 8px 20px rgba(254, 229, 0, 0.5);
         }
 
-        .share-btn.twitter {
-            background: #1DA1F2;
-            color: white;
-        }
-        .share-btn.twitter:hover {
-            box-shadow: 0 8px 20px rgba(29, 161, 242, 0.4);
+        /* X (트위터) - 검정 배경 */
+        .share-btn.twitter-x {
+            background: #000000;
         }
 
+        .share-btn.twitter-x:hover {
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* 스레드 - 검정 배경 */
         .share-btn.threads {
-            background: linear-gradient(135deg, #000000, #333333);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.2);
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
+
         .share-btn.threads:hover {
             box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
         }
 
+        /* 네이버 블로그 - 초록 배경 */
         .share-btn.naver {
             background: #03C75A;
-            color: white;
-        }
-        .share-btn.naver:hover {
-            box-shadow: 0 8px 20px rgba(3, 199, 90, 0.4);
         }
 
+        .share-btn.naver:hover {
+            box-shadow: 0 8px 20px rgba(3, 199, 90, 0.5);
+        }
+
+        /* 페이스북 - 파란 배경 */
         .share-btn.facebook {
             background: #1877F2;
-            color: white;
-        }
-        .share-btn.facebook:hover {
-            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.4);
         }
 
+        .share-btn.facebook:hover {
+            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.5);
+        }
+
+        /* 링크 복사 - 글래스 스타일 */
         .share-btn.copy-link {
             background: rgba(255, 255, 255, 0.1);
-            color: var(--text-primary);
-            border: 1px solid var(--glass-border);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
+
         .share-btn.copy-link:hover {
             background: rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
@@ -477,7 +484,9 @@ def get_optimized_style():
             opacity: 1;
         }
 
-        /* 기존 스타일 계속... */
+        /* ==========================================
+           기존 스타일 계속
+           ========================================== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -501,6 +510,7 @@ def get_optimized_style():
         }
 
         .stat-icon { font-size: 2rem; margin-bottom: 8px; }
+
         .stat-value {
             font-size: 1.8rem;
             font-weight: 800;
@@ -508,6 +518,7 @@ def get_optimized_style():
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .stat-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 5px; }
 
         .ad-box {
@@ -572,10 +583,12 @@ def get_optimized_style():
             border-left-color: #06b6d4;
             background: linear-gradient(90deg, rgba(6,182,212,0.05), transparent);
         }
+
         .rank-gold {
             border-left-color: #f59e0b;
             background: linear-gradient(90deg, rgba(245,158,11,0.05), transparent);
         }
+
         .rank-silver { border-left-color: #6b7280; }
         .rank-red { border-left-color: #ef4444; opacity: 0.6; }
 
@@ -613,9 +626,11 @@ def get_optimized_style():
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .rank-gold .mobile-keyword-text { color: #fbbf24; }
 
         .mobile-count-section { margin-bottom: 12px; }
+
         .mobile-count-number {
             font-family: 'Courier New', monospace;
             font-size: 1.2rem;
@@ -643,6 +658,7 @@ def get_optimized_style():
         .rank-diamond .mobile-count-bar-fill {
             background: linear-gradient(90deg, #06b6d4, #8b5cf6);
         }
+
         .rank-gold .mobile-count-bar-fill {
             background: linear-gradient(90deg, #f59e0b, #fbbf24);
         }
@@ -661,16 +677,19 @@ def get_optimized_style():
             border: 1px solid rgba(6,182,212,0.3);
             color: #06b6d4;
         }
+
         .badge-gold {
             background: rgba(245,158,11,0.2);
             border: 1px solid rgba(245,158,11,0.3);
             color: #fbbf24;
         }
+
         .badge-silver {
             background: rgba(107,114,128,0.15);
             border: 1px solid rgba(107,114,128,0.3);
             color: #9ca3af;
         }
+
         .badge-red {
             background: rgba(239,68,68,0.15);
             border: 1px solid rgba(239,68,68,0.3);
@@ -702,6 +721,7 @@ def get_optimized_style():
             background: rgba(255,255,255,0.08);
             color: var(--text-primary);
         }
+
         .btn-copy:active {
             background: rgba(139,92,246,0.3);
             transform: scale(0.95);
@@ -711,6 +731,7 @@ def get_optimized_style():
             background: rgba(6,182,212,0.15);
             color: #06b6d4;
         }
+
         .btn-link:active {
             background: rgba(6,182,212,0.3);
             transform: scale(0.95);
@@ -776,6 +797,7 @@ def get_optimized_style():
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .rank-gold .keyword-text { color: #fbbf24; }
 
         .count-wrapper {
@@ -807,6 +829,7 @@ def get_optimized_style():
         .rank-diamond .count-bar-fill {
             background: linear-gradient(90deg, #06b6d4, #8b5cf6);
         }
+
         .rank-gold .count-bar-fill {
             background: linear-gradient(90deg, #f59e0b, #fbbf24);
         }
@@ -876,7 +899,7 @@ def get_optimized_style():
     """
 
 # ==========================================
-# 📌 액션 바 HTML (북마크 + PWA + 공유)
+# 📌 액션 바 HTML (북마크 + PWA + 공유) - SVG 아이콘 버전
 # ==========================================
 def get_action_bar_html():
     return f"""
@@ -904,23 +927,46 @@ def get_action_bar_html():
         <div class="share-divider">SNS 공유</div>
         
         <div class="share-buttons">
+            <!-- 카카오톡 -->
             <button class="share-btn kakao" onclick="shareKakao()" title="카카오톡">
-                💬
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#3C1E1E">
+                    <path d="M12 3C6.48 3 2 6.58 2 11c0 2.83 1.89 5.31 4.7 6.7-.17.6-.64 2.2-.73 2.54-.12.43.16.42.34.31.14-.09 2.23-1.5 3.12-2.1.52.07 1.05.11 1.57.11 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/>
+                </svg>
             </button>
-            <a href="https://twitter.com/intent/tweet?url={SITE_URL}&text=🚀 황금 키워드 상황실 - 실시간 블루오션 키워드 분석" target="_blank" class="share-btn twitter" title="X (트위터)">
-                𝕏
+            
+            <!-- X (트위터) -->
+            <a href="https://twitter.com/intent/tweet?url={SITE_URL}&text=🚀 황금 키워드 상황실 - 실시간 블루오션 키워드 분석" target="_blank" class="share-btn twitter-x" title="X (트위터)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
             </a>
-            <a href="https://www.threads.net/intent/post?text=🚀 황금 키워드 상황실 - 실시간 블루오션 키워드 분석 {SITE_URL}" target="_blank" class="share-btn threads" title="스레드">
-                @
+            
+            <!-- 스레드 -->
+            <a href="https://www.threads.net/intent/post?text=🚀 황금 키워드 상황실 {SITE_URL}" target="_blank" class="share-btn threads" title="스레드">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                    <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.59 12c.025 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.96-.065-1.17.408-2.133 1.332-2.727.834-.536 1.943-.79 3.389-.79l.463.013c.333.012.637.04.912.085.098-.772.097-1.472-.028-2.063-.267-1.265-1.079-1.93-2.415-1.977-1.476.044-2.27.73-2.511 1.168l-1.774-1.014c.495-.87 1.653-1.97 4.236-2.082 1.873-.037 3.28.527 4.184 1.674.821 1.04 1.153 2.472 1.013 4.378.502.167.96.39 1.363.671 1.073.748 1.837 1.79 2.205 3.017.49 1.628.288 3.922-1.64 5.81C18.303 23.095 15.697 23.973 12.186 24z"/>
+                </svg>
             </a>
+            
+            <!-- 네이버 블로그 -->
             <a href="https://blog.naver.com/openapi/share?url={SITE_URL}&title=황금 키워드 상황실" target="_blank" class="share-btn naver" title="네이버 블로그">
-                N
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                    <path d="M16.273 12.845L7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727z"/>
+                </svg>
             </a>
+            
+            <!-- 페이스북 -->
             <a href="https://www.facebook.com/sharer/sharer.php?u={SITE_URL}" target="_blank" class="share-btn facebook" title="페이스북">
-                f
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
             </a>
+            
+            <!-- 링크 복사 -->
             <button class="share-btn copy-link" onclick="copyPageLink()" title="링크 복사">
-                📋
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                </svg>
             </button>
         </div>
     </div>
@@ -941,6 +987,7 @@ def get_action_bar_html():
         </div>
     </div>
     """
+
 
 # ==========================================
 # 📜 JavaScript (PWA + 공유 기능)

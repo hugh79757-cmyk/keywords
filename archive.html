@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0f">
     <title>🗄️ 리포트 아카이브</title>
     
     <meta name="description" content="과거 키워드 분석 리포트">
@@ -10,7 +11,15 @@
     <link rel="canonical" href="https://keywords.rotcha.kr/archive.html">
     <meta property="og:title" content="🗄️ 리포트 아카이브">
     <meta property="og:description" content="과거 키워드 분석 리포트">
+    <meta property="og:url" content="https://keywords.rotcha.kr/archive.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://keywords.rotcha.kr/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="🗄️ 리포트 아카이브">
+    <meta name="twitter:description" content="과거 키워드 분석 리포트">
     <meta name="naver-site-verification" content="fc4c11b5b82613bc531109cb4aee0331874d5510" />
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
     
     
     <style>
@@ -85,14 +94,12 @@
         }
 
         @media (min-width: 1200px) {
-            .side-rail {
-                display: block;
-            }
+            .side-rail { display: block; }
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             padding: 30px 20px;
         }
 
@@ -116,10 +123,7 @@
             margin-bottom: 10px;
         }
 
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
+        .subtitle { color: var(--text-secondary); font-size: 0.95rem; }
 
         .update-time {
             display: inline-flex;
@@ -146,6 +150,275 @@
             50% { opacity: 0.5; transform: scale(1.2); }
         }
 
+        /* ==========================================
+           📌 액션 바 (북마크 + PWA + 공유)
+           ========================================== */
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        .action-bar-title {
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .action-bar-title::before,
+        .action-bar-title::after {
+            content: '';
+            flex: 1;
+            max-width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .action-btn .icon {
+            font-size: 1.1rem;
+        }
+
+        /* 특별 버튼 스타일 */
+        .action-btn.pwa-btn {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2));
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+
+        .action-btn.pwa-btn:hover {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3));
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        .action-btn.bookmark-btn {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .action-btn.bookmark-btn:hover {
+            background: rgba(245, 158, 11, 0.25);
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
+        }
+
+        /* SNS 공유 버튼 색상 */
+        .share-divider {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0 5px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .share-divider::before,
+        .share-divider::after {
+            content: '';
+            flex: 1;
+            max-width: 40px;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        .share-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .share-btn {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .share-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 각 SNS 색상 */
+        .share-btn.kakao {
+            background: #FEE500;
+            color: #3C1E1E;
+        }
+        .share-btn.kakao:hover {
+            box-shadow: 0 8px 20px rgba(254, 229, 0, 0.4);
+        }
+
+        .share-btn.twitter {
+            background: #1DA1F2;
+            color: white;
+        }
+        .share-btn.twitter:hover {
+            box-shadow: 0 8px 20px rgba(29, 161, 242, 0.4);
+        }
+
+        .share-btn.threads {
+            background: linear-gradient(135deg, #000000, #333333);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .share-btn.threads:hover {
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .share-btn.naver {
+            background: #03C75A;
+            color: white;
+        }
+        .share-btn.naver:hover {
+            box-shadow: 0 8px 20px rgba(3, 199, 90, 0.4);
+        }
+
+        .share-btn.facebook {
+            background: #1877F2;
+            color: white;
+        }
+        .share-btn.facebook:hover {
+            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.4);
+        }
+
+        .share-btn.copy-link {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+        .share-btn.copy-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        /* 북마크 팁 팝업 */
+        .bookmark-tip {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(139, 92, 246, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 16px 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            z-index: 1001;
+            max-width: 90%;
+            animation: slideUp 0.4s ease;
+        }
+
+        .bookmark-tip.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateX(-50%) translateY(30px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
+        .bookmark-tip-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+        }
+
+        .bookmark-tip-icon {
+            font-size: 2rem;
+        }
+
+        .bookmark-tip-text h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .bookmark-tip-text p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .bookmark-tip-text kbd {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            margin: 0 2px;
+        }
+
+        .bookmark-tip-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .bookmark-tip-close:hover {
+            opacity: 1;
+        }
+
+        /* 기존 스타일 계속... */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -196,9 +469,7 @@
             letter-spacing: 1px;
         }
 
-        .ad-row td {
-            padding: 0 !important;
-        }
+        .ad-row td { padding: 0 !important; }
 
         .ad-box-table {
             background: var(--glass-bg);
@@ -236,9 +507,7 @@
             transition: all 0.3s;
         }
 
-        .keyword-card-mobile:active {
-            transform: scale(0.98);
-        }
+        .keyword-card-mobile:active { transform: scale(0.98); }
 
         .rank-diamond {
             border-left-color: #06b6d4;
@@ -397,14 +666,9 @@
             overflow: hidden;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+        table { width: 100%; border-collapse: collapse; }
 
-        thead {
-            background: rgba(0, 0, 0, 0.3);
-        }
+        thead { background: rgba(0, 0, 0, 0.3); }
 
         th {
             padding: 16px 20px;
@@ -420,14 +684,9 @@
             transition: all 0.2s;
         }
 
-        tbody tr:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
+        tbody tr:hover { background: rgba(255, 255, 255, 0.05); }
 
-        td {
-            padding: 16px 20px;
-            vertical-align: middle;
-        }
+        td { padding: 16px 20px; vertical-align: middle; }
 
         .keyword-cell {
             display: flex;
@@ -451,10 +710,7 @@
             color: #06b6d4;
         }
 
-        .keyword-text {
-            font-weight: 600;
-            font-size: 1rem;
-        }
+        .keyword-text { font-weight: 600; font-size: 1rem; }
 
         .rank-diamond .keyword-text {
             background: linear-gradient(135deg, #06b6d4, #8b5cf6);
@@ -519,9 +775,7 @@
             transition: all 0.3s;
         }
 
-        .archive-btn:active {
-            transform: scale(0.98);
-        }
+        .archive-btn:active { transform: scale(0.98); }
 
         #toast {
             position: fixed;
@@ -556,7 +810,6 @@
         @media (min-width: 768px) {
             .keyword-list-mobile { display: none; }
             .keyword-table-desktop { display: block; }
-            
             h1 { font-size: 2.5rem; }
             .logo { font-size: 3.5rem; }
         }
@@ -587,6 +840,69 @@
             </header>
             
             
+    <!-- 액션 바: 북마크 + PWA + 공유 -->
+    <div class="action-bar">
+        <div class="action-bar-title">빠른 저장 & 공유</div>
+        
+        <!-- 메인 액션 버튼들 -->
+        <button class="action-btn pwa-btn" id="installBtn" style="display:none;" onclick="installPWA()">
+            <span class="icon">📲</span>
+            <span>앱으로 저장</span>
+        </button>
+        
+        <button class="action-btn bookmark-btn" onclick="showBookmarkTip()">
+            <span class="icon">⭐</span>
+            <span>북마크 추가</span>
+        </button>
+        
+        <button class="action-btn" onclick="copyPageLink()">
+            <span class="icon">🔗</span>
+            <span>링크 복사</span>
+        </button>
+        
+        <!-- SNS 공유 버튼들 -->
+        <div class="share-divider">SNS 공유</div>
+        
+        <div class="share-buttons">
+            <button class="share-btn kakao" onclick="shareKakao()" title="카카오톡">
+                💬
+            </button>
+            <a href="https://twitter.com/intent/tweet?url=https://keywords.rotcha.kr&text=🚀 황금 키워드 상황실 - 실시간 블루오션 키워드 분석" target="_blank" class="share-btn twitter" title="X (트위터)">
+                𝕏
+            </a>
+            <a href="https://www.threads.net/intent/post?text=🚀 황금 키워드 상황실 - 실시간 블루오션 키워드 분석 https://keywords.rotcha.kr" target="_blank" class="share-btn threads" title="스레드">
+                @
+            </a>
+            <a href="https://blog.naver.com/openapi/share?url=https://keywords.rotcha.kr&title=황금 키워드 상황실" target="_blank" class="share-btn naver" title="네이버 블로그">
+                N
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://keywords.rotcha.kr" target="_blank" class="share-btn facebook" title="페이스북">
+                f
+            </a>
+            <button class="share-btn copy-link" onclick="copyPageLink()" title="링크 복사">
+                📋
+            </button>
+        </div>
+    </div>
+    
+    <!-- 북마크 안내 팝업 -->
+    <div class="bookmark-tip" id="bookmarkTip">
+        <button class="bookmark-tip-close" onclick="closeBookmarkTip()">✕</button>
+        <div class="bookmark-tip-content">
+            <span class="bookmark-tip-icon">⭐</span>
+            <div class="bookmark-tip-text">
+                <h4>브라우저 북마크 추가하기</h4>
+                <p>
+                    <strong>PC:</strong> <kbd>Ctrl</kbd> + <kbd>D</kbd><br>
+                    <strong>Mac:</strong> <kbd>⌘</kbd> + <kbd>D</kbd><br>
+                    <strong>모바일:</strong> 공유 버튼 → 북마크 추가
+                </p>
+            </div>
+        </div>
+    </div>
+    
+            
+            
     <div class="ad-box">
         <div class="ad-label">Advertisement</div>
         <ins class="adsbygoogle" 
@@ -600,7 +916,7 @@
     
             
             <div style="display:flex; flex-direction:column; gap:10px;">
-                <a href="reports/20251230_1129.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 1129</a><a href="reports/20251230_0834.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0834</a><a href="reports/20251230_0741.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0741</a><a href="reports/20251230_0633.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0633</a><a href="reports/20251230_0544.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0544</a><a href="reports/20251230_0428.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0428</a><a href="reports/20251230_0354.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0354</a><a href="reports/20251230_0240.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0240</a><a href="reports/20251230_0152.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0152</a><a href="reports/20251230_0041.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0041</a><a href="reports/20251229_2347.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 2347</a><a href="reports/20251229_2250.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 2250</a><a href="reports/20251229_2034.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 2034</a><a href="reports/20251229_1950.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1950</a><a href="reports/20251229_1855.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1855</a><a href="reports/20251229_1800.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1800</a><a href="reports/20251229_1603.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1603</a><a href="reports/20251229_1403.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1403</a><a href="reports/20251229_1254.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1254</a><a href="reports/20251229_1241.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1241</a><a href="reports/20251229_0334.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0334</a><a href="reports/20251229_0324.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0324</a><a href="reports/20251229_0312.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0312</a><a href="reports/20251229_0303.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0303</a><a href="reports/20251229_0221.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0221</a><a href="reports/20251229_0212.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0212</a><a href="reports/20251229_0201.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0201</a>
+                <a href="reports/20251230_1206.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 1206</a><a href="reports/20251230_1129.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 1129</a><a href="reports/20251230_0834.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0834</a><a href="reports/20251230_0741.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0741</a><a href="reports/20251230_0633.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0633</a><a href="reports/20251230_0544.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0544</a><a href="reports/20251230_0428.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0428</a><a href="reports/20251230_0354.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0354</a><a href="reports/20251230_0240.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0240</a><a href="reports/20251230_0152.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0152</a><a href="reports/20251230_0041.html" class="archive-btn" style="margin-bottom:10px;">📄 20251230 0041</a><a href="reports/20251229_2347.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 2347</a><a href="reports/20251229_2250.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 2250</a><a href="reports/20251229_2034.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 2034</a><a href="reports/20251229_1950.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1950</a><a href="reports/20251229_1855.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1855</a><a href="reports/20251229_1800.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1800</a><a href="reports/20251229_1603.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1603</a><a href="reports/20251229_1403.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1403</a><a href="reports/20251229_1254.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1254</a><a href="reports/20251229_1241.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 1241</a><a href="reports/20251229_0334.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0334</a><a href="reports/20251229_0324.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0324</a><a href="reports/20251229_0312.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0312</a><a href="reports/20251229_0303.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0303</a><a href="reports/20251229_0221.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0221</a><a href="reports/20251229_0212.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0212</a><a href="reports/20251229_0201.html" class="archive-btn" style="margin-bottom:10px;">📄 20251229 0201</a>
             </div>
             
             
@@ -634,5 +950,152 @@
     </aside>
     
     </div>
+    
+    <div id="toast">✅ 복사되었습니다!</div>
+    
+    <script>
+        // ==========================================
+        // PWA 설치 기능
+        // ==========================================
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // PWA 설치 버튼 표시
+            document.getElementById('installBtn').style.display = 'inline-flex';
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        showToast('✅ 홈 화면에 추가되었습니다!');
+                    }
+                    deferredPrompt = null;
+                    document.getElementById('installBtn').style.display = 'none';
+                });
+            } else {
+                // iOS Safari 안내
+                showToast('📱 공유 버튼 → "홈 화면에 추가"를 눌러주세요');
+            }
+        }
+
+        // ==========================================
+        // 북마크 안내
+        // ==========================================
+        function showBookmarkTip() {
+            document.getElementById('bookmarkTip').classList.add('show');
+        }
+
+        function closeBookmarkTip() {
+            document.getElementById('bookmarkTip').classList.remove('show');
+        }
+
+        // 바깥 클릭 시 닫기
+        document.addEventListener('click', (e) => {
+            const tip = document.getElementById('bookmarkTip');
+            const btn = document.querySelector('.bookmark-btn');
+            if (tip.classList.contains('show') && 
+                !tip.contains(e.target) && 
+                !btn.contains(e.target)) {
+                closeBookmarkTip();
+            }
+        });
+
+        // ==========================================
+        // 링크 복사
+        // ==========================================
+        function copyPageLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                showToast('✅ 링크가 복사되었습니다!');
+            }).catch(() => {
+                // 폴백
+                const textArea = document.createElement('textarea');
+                textArea.value = window.location.href;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast('✅ 링크가 복사되었습니다!');
+            });
+        }
+
+        // ==========================================
+        // 카카오톡 공유
+        // ==========================================
+        function shareKakao() {
+            // 카카오 SDK가 없으면 URL 공유
+            if (typeof Kakao === 'undefined') {
+                const kakaoUrl = 'https://sharer.kakao.com/talk/friends/picker/link?app_key=YOUR_APP_KEY&url=' + encodeURIComponent(window.location.href);
+                // 간단한 방법: 카카오톡 앱 스킴 또는 웹 공유
+                if (navigator.share) {
+                    navigator.share({
+                        title: '🚀 황금 키워드 상황실',
+                        text: '실시간 블루오션 키워드 분석',
+                        url: window.location.href
+                    });
+                } else {
+                    copyPageLink();
+                    showToast('💬 링크를 복사했어요! 카카오톡에 붙여넣기 하세요');
+                }
+            } else {
+                Kakao.Share.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: '🚀 황금 키워드 상황실',
+                        description: '실시간 트렌드 키워드 분석으로 블루오션을 찾아보세요!',
+                        imageUrl: 'https://keywords.rotcha.kr/og-image.png',
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href
+                        }
+                    },
+                    buttons: [{
+                        title: '키워드 분석하기',
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href
+                        }
+                    }]
+                });
+            }
+        }
+
+        // ==========================================
+        // 키워드 복사
+        // ==========================================
+        function copyKeyword(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                showToast('✅ "' + text + '" 복사 완료!');
+            }).catch(function() {
+                alert('복사됨: ' + text);
+            });
+        }
+
+        // ==========================================
+        // 토스트 메시지
+        // ==========================================
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ==========================================
+        // 첫 방문자에게 북마크 팁 자동 표시 (선택사항)
+        // ==========================================
+        /*
+        if (!localStorage.getItem('bookmarkTipShown')) {
+            setTimeout(() => {
+                showBookmarkTip();
+                localStorage.setItem('bookmarkTipShown', 'true');
+            }, 10000); // 10초 후 표시
+        }
+        */
+    </script>
+    
 </body>
 </html>

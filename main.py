@@ -1265,6 +1265,9 @@ def get_blog_count(keyword):
 # ==========================================
 # 3. 메인 대시보드 생성
 # ==========================================
+# ==========================================
+# 3. 메인 대시보드 생성
+# ==========================================
 def create_seo_optimized_dashboard():
     keywords = get_keywords_from_farm()
     if not keywords:
@@ -1316,27 +1319,27 @@ def create_seo_optimized_dashboard():
         link = f"https://search.naver.com/search.naver?where=view&sm=tab_jum&query={item['word']}"
         bar_width = min((item['count'] / max_count) * 100, 100)
         
-        # [전략 1] 광고 배치 수정: 
-        # 1. 4번째 아이템(idx==3) 바로 뒤 (가장 주목도 높음)
-        # 2. 그 이후로는 7개 간격으로 반복
-        should_show_ad = (idx == 3) or (idx > 3 and (idx - 3) % 7 == 0)
+        # ✅ 광고 배치 전략: 3번째(idx==2) 뒤에 1개, 이후 5개마다 1개
+        # idx: 0,1,2 → 3번째(idx==2) 다음에 광고
+        # 그 이후: idx==8, idx==13, idx==18... (5개 간격)
+        should_show_ad = (idx == 3) or (idx > 3 and (idx - 3) % 5 == 0)
 
         if should_show_ad:
             # 모바일 광고
             mobile_cards += f"""
-            <div class="ad-box-mobile" style="margin: 15px 0; text-align: center;">
-                <div class="ad-label" style="font-size:0.7rem; color:#666; margin-bottom:5px;">Advertisement</div>
+            <div class="ad-box-mobile">
+                <div class="ad-label">Advertisement</div>
                 <ins class="adsbygoogle" style="display:block" data-ad-client="{PUB_ID}" data-ad-slot="{SLOT_ID}" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
             </div>
             """
             
-            # PC 테이블 광고 (행 전체 병합)
+            # PC 테이블 광고
             desktop_rows += f"""
             <tr class="ad-row">
-                <td colspan="4" style="padding: 15px 0;">
-                    <div class="ad-box-table" style="text-align: center;">
-                        <div class="ad-label" style="font-size:0.7rem; color:#666; margin-bottom:5px;">Advertisement</div>
+                <td colspan="4" style="padding: 0;">
+                    <div class="ad-box-table">
+                        <div class="ad-label">Advertisement</div>
                         <ins class="adsbygoogle" style="display:block" data-ad-client="{PUB_ID}" data-ad-slot="{SLOT_ID}" data-ad-format="auto" data-full-width-responsive="true"></ins>
                         <script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
                     </div>
@@ -1344,55 +1347,7 @@ def create_seo_optimized_dashboard():
             </tr>
             """
 
-        # PC 테이블 행 데이터
-        desktop_rows += f"""
-        <tr class="{item['css']}">
-            <td>
-                <div class="keyword-cell">
-                    <span class="keyword-rank">{idx+1}</span>
-                    <span class="keyword-text">{item['word']}</span>
-                </div>
-            </td>
-            <td>
-                <div class="count-wrapper">
-                    <span class="count-text">{format(item['count'], ',')}건</span>
-                    <div class="count-bar">
-                        <div class="count-bar-fill" style="width:{bar_width}%; background:var(--accent)"></div>
-                    </div>
-                </div>
-            </td>
-            <td><span class="badge {item['badge']}">{item['grade']}</span></td>
-            <td>
-                <div class="actions-cell">
-                    <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋 복사</button>
-                    <a href="{link}" target="_blank" class="btn btn-link">분석 ↗</a>
-                </div>
-            </td>
-        </tr>
-        """
-        
-        # 모바일 카드 데이터
-        mobile_cards += f"""
-        <div class="keyword-card-mobile {item['css']}">
-            <div class="mobile-card-header">
-                <span class="mobile-keyword-rank">{idx+1}</span>
-                <span class="mobile-keyword-text">{item['word']}</span>
-            </div>
-            <div class="mobile-count-section">
-                <div class="mobile-count-number">{format(item['count'], ',')}건</div>
-                <div class="mobile-count-bar">
-                    <div class="mobile-count-bar-fill" style="width:{bar_width}%; background:var(--accent)"></div>
-                </div>
-            </div>
-            <span class="badge {item['badge']}">{item['grade']}</span>
-            <div class="mobile-actions">
-                <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋 복사</button>
-                <a href="{link}" target="_blank" class="btn btn-link">분석 ↗</a>
-            </div>
-        </div>
-        """
-            """
-
+        # PC 테이블 행
         desktop_rows += f"""
         <tr class="{item['css']}">
             <td>
@@ -1412,13 +1367,14 @@ def create_seo_optimized_dashboard():
             <td><span class="badge {item['badge']}">{item['grade']}</span></td>
             <td>
                 <div class="actions-cell">
-                    <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋복사</button>
-                    <a href="{link}" target="_blank" class="btn btn-link">분석↗</a>
+                    <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋 복사</button>
+                    <a href="{link}" target="_blank" class="btn btn-link">분석 ↗</a>
                 </div>
             </td>
         </tr>
         """
 
+        # 모바일 카드
         mobile_cards += f"""
         <div class="keyword-card-mobile {item['css']}">
             <div class="mobile-card-header">
@@ -1433,8 +1389,8 @@ def create_seo_optimized_dashboard():
             </div>
             <span class="badge {item['badge']}">{item['grade']}</span>
             <div class="mobile-actions">
-                <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋복사</button>
-                <a href="{link}" target="_blank" class="btn btn-link">분석↗</a>
+                <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋 복사</button>
+                <a href="{link}" target="_blank" class="btn btn-link">분석 ↗</a>
             </div>
         </div>
         """
@@ -1455,6 +1411,7 @@ def create_seo_optimized_dashboard():
     action_bar = get_action_bar_html()
     scripts = get_scripts()
 
+    # ✅ 통계 카드
     stats_html = f"""
     <div class="stats-grid">
         <div class="stat-card">
@@ -1475,6 +1432,54 @@ def create_seo_optimized_dashboard():
     </div>
     """
 
+    # ✅ SEO 고단가 키워드 가이드 (애드센스 고단가 광고 유도)
+    seo_guide_html = """
+    <div class="seo-guide-box">
+        <h4>📈 블로그 수익화 & SEO 최적화 가이드</h4>
+        <p>
+            본 데이터는 <strong>네이버 블로그, 티스토리, 워드프레스, 구글 SEO</strong> 최적화를 위한 실시간 분석 자료입니다.
+            황금 키워드를 활용하여 <strong>애드센스 수익, 제휴 마케팅, 웹사이트 트래픽</strong>을 극대화하세요.
+        </p>
+        <div class="seo-keywords">
+            <span class="seo-tag">도메인 등록</span>
+            <span class="seo-tag">웹호스팅</span>
+            <span class="seo-tag">서버 구축</span>
+            <span class="seo-tag">VPS 호스팅</span>
+            <span class="seo-tag">클라우드 서버</span>
+            <span class="seo-tag">SSL 인증서</span>
+            <span class="seo-tag">CDN 서비스</span>
+            <span class="seo-tag">워드프레스 호스팅</span>
+        </div>
+        <p class="seo-sub">
+            <strong>디지털 마케팅, SaaS 솔루션, 온라인 비즈니스, 이커머스 플랫폼, 
+            결제 시스템, CRM 소프트웨어, ERP 시스템, 클라우드 컴퓨팅</strong> 
+            등 고수익 키워드 전략 수립에 활용하세요.
+        </p>
+    </div>
+    """
+
+    # ✅ 중간 SEO 콘텐츠 (키워드 중간에 삽입용)
+    mid_seo_content = """
+    <div class="seo-guide-box mid-content">
+        <h4>💰 고수익 키워드 활용 전략</h4>
+        <p>
+            <strong>보험 비교, 대출 금리, 신용카드 추천, 주식 투자, 부동산 투자, 
+            법률 상담, 세무 상담, 건강 보험</strong> 등 CPC 단가가 높은 키워드와 
+            연계하여 블로그 콘텐츠를 작성하면 광고 수익을 극대화할 수 있습니다.
+        </p>
+        <div class="seo-keywords">
+            <span class="seo-tag">보험 비교</span>
+            <span class="seo-tag">대출 금리</span>
+            <span class="seo-tag">신용카드 혜택</span>
+            <span class="seo-tag">주식 투자</span>
+            <span class="seo-tag">부동산 투자</span>
+            <span class="seo-tag">법률 상담</span>
+            <span class="seo-tag">세무 상담</span>
+            <span class="seo-tag">건강 보험</span>
+        </div>
+    </div>
+    """
+
     index_html = f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -1484,9 +1489,73 @@ def create_seo_optimized_dashboard():
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="키워드상황실">
-    <title>🚀 황금 키워드 상황실</title>
+    <title>🚀 황금 키워드 상황실 - 블로그 SEO 키워드 분석 도구</title>
     {seo_meta}
     {style}
+    
+    <!-- SEO 고단가 키워드 스타일 -->
+    <style>
+        .seo-guide-box {{
+            margin: 30px 0;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.05));
+            border-radius: 16px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            line-height: 1.8;
+        }}
+        
+        .seo-guide-box h4 {{
+            margin: 0 0 12px 0;
+            color: #8b5cf6;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }}
+        
+        .seo-guide-box p {{
+            margin: 0 0 15px 0;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }}
+        
+        .seo-guide-box .seo-sub {{
+            margin: 15px 0 0 0;
+            font-size: 0.85rem;
+            color: #64748b;
+        }}
+        
+        .seo-keywords {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }}
+        
+        .seo-tag {{
+            padding: 6px 12px;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #a78bfa;
+            font-weight: 500;
+        }}
+        
+        .seo-guide-box.mid-content {{
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(239, 68, 68, 0.05));
+            border-color: rgba(245, 158, 11, 0.2);
+        }}
+        
+        .seo-guide-box.mid-content h4 {{
+            color: #f59e0b;
+        }}
+        
+        .seo-guide-box.mid-content .seo-tag {{
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: #fbbf24;
+        }}
+    </style>
+    
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={PUB_ID}" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -1497,7 +1566,7 @@ def create_seo_optimized_dashboard():
             <header>
                 <div class="logo">🚀</div>
                 <h1>황금 키워드 상황실</h1>
-                <p class="subtitle">실시간 트렌드 키워드 분석</p>
+                <p class="subtitle">실시간 트렌드 키워드 분석 · 블로그 SEO 최적화</p>
                 <div class="update-time">
                     <span class="pulse"></span>
                     <span>{now} 업데이트 (KST)</span>
@@ -1507,12 +1576,18 @@ def create_seo_optimized_dashboard():
             {action_bar}
             
             {stats_html}
+            
+            <!-- 상단 SEO 가이드 -->
+            {seo_guide_html}
+            
             {get_ad_unit()}
             
+            <!-- 모바일 키워드 리스트 -->
             <div class="keyword-list-mobile">
                 {mobile_cards}
             </div>
             
+            <!-- PC 키워드 테이블 -->
             <div class="keyword-table-desktop">
                 <table>
                     <thead>
@@ -1529,11 +1604,40 @@ def create_seo_optimized_dashboard():
                 </table>
             </div>
             
+            <!-- 중간 SEO 콘텐츠 (고단가 키워드) -->
+            {mid_seo_content}
+            
+            {get_ad_unit()}
+            
+            <!-- 하단 SEO 콘텐츠 -->
+            <div class="seo-guide-box">
+                <h4>🎯 키워드 분석 활용법</h4>
+                <p>
+                    <strong>블루오션 키워드</strong>는 경쟁이 낮아 상위 노출이 쉽고, 
+                    <strong>꿀통 키워드</strong>는 적절한 경쟁과 검색량을 갖춘 최적의 키워드입니다.
+                    이 데이터를 활용하여 <strong>구글 애드센스, 네이버 애드포스트, 카카오 애드핏</strong> 
+                    수익을 극대화하세요.
+                </p>
+                <div class="seo-keywords">
+                    <span class="seo-tag">구글 애드센스</span>
+                    <span class="seo-tag">네이버 애드포스트</span>
+                    <span class="seo-tag">카카오 애드핏</span>
+                    <span class="seo-tag">제휴 마케팅</span>
+                    <span class="seo-tag">CPA 마케팅</span>
+                    <span class="seo-tag">인플루언서 마케팅</span>
+                </div>
+            </div>
+            
             {get_ad_unit()}
             
             <a href="archive.html" class="archive-btn">🗄️ 지난 리포트 보기</a>
             
-            <footer>© 2025 황금 키워드 상황실</footer>
+            <footer>
+                <p>© 2025 황금 키워드 상황실 · 블로그 SEO 최적화 도구</p>
+                <p style="margin-top: 10px; font-size: 0.75rem; color: #475569;">
+                    키워드 분석 · 블로그 수익화 · 애드센스 최적화 · 검색엔진 최적화 · 디지털 마케팅
+                </p>
+            </footer>
         </main>
         
         {get_side_rail_ad()}
@@ -1558,6 +1662,7 @@ def create_seo_optimized_dashboard():
 
     print(f"✅ 완성! ({now})")
     print(f"💎 블루오션: {diamond_cnt}개 | 🥇 꿀통: {gold_cnt}개")
+
 
 # ==========================================
 # 4. 아카이브 페이지

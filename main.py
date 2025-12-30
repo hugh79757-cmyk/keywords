@@ -636,6 +636,7 @@ def get_optimized_style():
             font-size: 1.2rem;
             font-weight: 700;
             margin-bottom: 6px;
+            text-align: center; 
         }
 
         .rank-diamond .mobile-count-number { color: #06b6d4; }

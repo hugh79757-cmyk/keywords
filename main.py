@@ -1315,27 +1315,82 @@ def create_seo_optimized_dashboard():
     for idx, item in enumerate(data):
         link = f"https://search.naver.com/search.naver?where=view&sm=tab_jum&query={item['word']}"
         bar_width = min((item['count'] / max_count) * 100, 100)
+        
+        # [전략 1] 광고 배치 수정: 
+        # 1. 4번째 아이템(idx==3) 바로 뒤 (가장 주목도 높음)
+        # 2. 그 이후로는 7개 간격으로 반복
+        should_show_ad = (idx == 3) or (idx > 3 and (idx - 3) % 7 == 0)
 
-        if idx > 0 and idx % 5 == 0:
+        if should_show_ad:
+            # 모바일 광고
             mobile_cards += f"""
-            <div class="ad-box-mobile">
-                <div class="ad-label">Advertisement</div>
+            <div class="ad-box-mobile" style="margin: 15px 0; text-align: center;">
+                <div class="ad-label" style="font-size:0.7rem; color:#666; margin-bottom:5px;">Advertisement</div>
                 <ins class="adsbygoogle" style="display:block" data-ad-client="{PUB_ID}" data-ad-slot="{SLOT_ID}" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
             </div>
             """
-
-        if idx > 0 and idx % 7 == 0:
+            
+            # PC 테이블 광고 (행 전체 병합)
             desktop_rows += f"""
             <tr class="ad-row">
-                <td colspan="4" style="padding:0;">
-                    <div class="ad-box-table">
-                        <div class="ad-label">Advertisement</div>
+                <td colspan="4" style="padding: 15px 0;">
+                    <div class="ad-box-table" style="text-align: center;">
+                        <div class="ad-label" style="font-size:0.7rem; color:#666; margin-bottom:5px;">Advertisement</div>
                         <ins class="adsbygoogle" style="display:block" data-ad-client="{PUB_ID}" data-ad-slot="{SLOT_ID}" data-ad-format="auto" data-full-width-responsive="true"></ins>
                         <script>(adsbygoogle = window.adsbygoogle || []).push({{}});</script>
                     </div>
                 </td>
             </tr>
+            """
+
+        # PC 테이블 행 데이터
+        desktop_rows += f"""
+        <tr class="{item['css']}">
+            <td>
+                <div class="keyword-cell">
+                    <span class="keyword-rank">{idx+1}</span>
+                    <span class="keyword-text">{item['word']}</span>
+                </div>
+            </td>
+            <td>
+                <div class="count-wrapper">
+                    <span class="count-text">{format(item['count'], ',')}건</span>
+                    <div class="count-bar">
+                        <div class="count-bar-fill" style="width:{bar_width}%; background:var(--accent)"></div>
+                    </div>
+                </div>
+            </td>
+            <td><span class="badge {item['badge']}">{item['grade']}</span></td>
+            <td>
+                <div class="actions-cell">
+                    <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋 복사</button>
+                    <a href="{link}" target="_blank" class="btn btn-link">분석 ↗</a>
+                </div>
+            </td>
+        </tr>
+        """
+        
+        # 모바일 카드 데이터
+        mobile_cards += f"""
+        <div class="keyword-card-mobile {item['css']}">
+            <div class="mobile-card-header">
+                <span class="mobile-keyword-rank">{idx+1}</span>
+                <span class="mobile-keyword-text">{item['word']}</span>
+            </div>
+            <div class="mobile-count-section">
+                <div class="mobile-count-number">{format(item['count'], ',')}건</div>
+                <div class="mobile-count-bar">
+                    <div class="mobile-count-bar-fill" style="width:{bar_width}%; background:var(--accent)"></div>
+                </div>
+            </div>
+            <span class="badge {item['badge']}">{item['grade']}</span>
+            <div class="mobile-actions">
+                <button class="btn btn-copy" onclick="copyKeyword('{item['word']}')">📋 복사</button>
+                <a href="{link}" target="_blank" class="btn btn-link">분석 ↗</a>
+            </div>
+        </div>
+        """
             """
 
         desktop_rows += f"""
